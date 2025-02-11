@@ -5,7 +5,7 @@
 {% block body %}
     <a class="p-2" href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
     <h4 class="text-center mt-4">{{ recipe.title }}</h4>
-    <p class="text-center text-primary mb-4">(pour 1 personne)</p>
+    <p class="text-center text-primary mb-4">(pour {{ people_count }} personne)</p>
     {% if recipe.season %}
         <p class="text-center text-primary mb-4">Saison : {{ recipe.season.name }}</p>
     {% endif %}
@@ -18,7 +18,8 @@
                 <h5 class="text-center mb-3"><i class="fas fa-carrot mr-2"></i> Ingrédients</h5>
                 <ul>
                     {% for ingredient in recipe.ingredients %}
-                        <li>{{ ingredient.aliment.name }} - qté : {{ ingredient.quantity }} {{ ingredient.aliment.unit.name }}</li>
+                        {% set ingredient_quantity = ingredient.quantity * people_count %}
+                        <li>{{ ingredient.aliment.name }} - qté : {{ ingredient_quantity }} {{ ingredient.aliment.unit.name }}</li>
                     {% endfor %}
                 </ul>
             </div>

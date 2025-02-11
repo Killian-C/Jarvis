@@ -7,6 +7,7 @@ use App\Form\AlimentType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +37,7 @@ class AlimentController extends AbstractController
         $form = $this->createForm(AlimentType::class, $aliment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $prettyName = sprintf('%s (%s)', $aliment->getName(), $aliment->getUnit()->getName());
+            $prettyName = $this->buildPrettyName($aliment);
             $aliment->setPrettyName($prettyName);
             $entityManager->persist($aliment);
             $entityManager->flush();
@@ -57,6 +58,10 @@ class AlimentController extends AbstractController
         $form = $this->createForm(AlimentType::class, $aliment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $prettyName = $this->buildPrettyName($aliment);
+            $aliment->setPrettyName($prettyName);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('aliment_index');
@@ -71,10 +76,15 @@ class AlimentController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete")
      */
-    public function delete(Aliment $aliment, EntityManagerInterface $entityManager)
+    public function delete(Aliment $aliment, EntityManagerInterface $entityManager): RedirectResponse
     {
         $entityManager->remove($aliment);
         $entityManager->flush();
         return $this->redirectToRoute('aliment_index');
+    }
+
+    private function buildPrettyName(Aliment $aliment): string
+    {
+        return sprintf('%s (%s)', $aliment->getName(), $aliment->getUnit()->getName());
     }
 }

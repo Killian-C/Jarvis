@@ -58,14 +58,16 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="show")
+     * @Route("/show/{id}/{peopleCount}", name="show")
      * @param Recipe $recipe
+     * @param int $peopleCount
      * @return Response
      */
-    public function show(Recipe $recipe): Response
+    public function show(Recipe $recipe, int $peopleCount = 1): Response
     {
         return $this->render('recipe/show.html.twig' , [
-            'recipe' => $recipe
+            'recipe'       => $recipe,
+            'people_count' => $peopleCount,
         ]);
     }
 
