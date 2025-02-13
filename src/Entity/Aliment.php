@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AlimentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as AcmeAssert;
 
 /**
  * @ORM\Entity(repositoryClass=AlimentRepository::class)
@@ -19,6 +20,7 @@ class Aliment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @AcmeAssert\UniqueAliment()
      */
     private $name;
 

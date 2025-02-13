@@ -36,6 +36,7 @@ class UnitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            //TODO CHECK IF DON'T EXIST
             $entityManager->persist($unit);
             $entityManager->flush();
 

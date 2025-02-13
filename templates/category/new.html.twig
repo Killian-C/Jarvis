@@ -8,6 +8,7 @@
     {{ form_start(form) }}
     <div>{{ form_label(form.name) }}</div>
     <div>{{ form_widget(form.name) }}</div>
+    <div class="text-danger pt-2">{{ form_errors(form.name) }}</div>
     <button class="btn btn-primary my-3" type="submit">{% block text_button %}Ajouter{% endblock %}</button>
     {{ form_end(form) }}
 </div>

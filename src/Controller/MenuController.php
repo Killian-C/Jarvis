@@ -42,6 +42,7 @@ class MenuController extends AbstractController
      * @param ShiftService $shiftService
      * @param RecipeRepository $recipeRepository
      * @return Response
+     * @throws \DateMalformedStringException
      */
     public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository): Response
     {

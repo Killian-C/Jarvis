@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UnitRepository;
+use App\Validator as AcmeAssert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,6 +20,7 @@ class Unit
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @AcmeAssert\UniqueUnit()
      */
     private $name;
 

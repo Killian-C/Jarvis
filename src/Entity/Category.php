@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use App\Validator as AcmeAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -21,6 +23,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @AcmeAssert\UniqueCategory()
      */
     private $name;
 

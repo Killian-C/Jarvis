@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RecipeTypeRepository;
+use App\Validator as AcmeAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +22,7 @@ class RecipeType
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @AcmeAssert\UniqueRecipeType()
      */
     private $name;
 
