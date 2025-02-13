@@ -61,7 +61,7 @@ class RecipeTypeController extends AbstractController
      */
     public function edit(Request $request, EntityManagerInterface $em, RecipeType $recipeType): Response
     {
-        $recipeTypeType = $this->createForm(recipeTypeType::class, $recipeType);
+        $recipeTypeType = $this->createForm(RecipeTypeType::class, $recipeType);
         $recipeTypeType->handleRequest($request);
         if ($recipeTypeType->isSubmitted() && $recipeTypeType->isValid()) {
             $em ->flush($recipeType);
