@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Season;
+use App\Service\SeasonDateAdapter;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,37 +16,25 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SeasonRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private SeasonDateAdapter $seasonDateAdapter;
+    public function __construct(ManagerRegistry $registry, SeasonDateAdapter $seasonDateAdapter)
     {
         parent::__construct($registry, Season::class);
+        $this->seasonDateAdapter = $seasonDateAdapter;
     }
 
-    // /**
-    //  * @return Season[] Returns an array of Season objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @throws \DateMalformedStringException
+     */
+    public function findSeasonByDate(DateTime $date)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('s');
 
-    /*
-    public function findOneBySomeField($value): ?Season
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+        $qb
+            ->where("s.start_date <= :date AND s.end_date >= :date")
+            ->setParameter('date', $this->seasonDateAdapter->adapt($date))
         ;
+
+        return $qb->getQuery()->getResult();
     }
-    */
 }

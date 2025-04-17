@@ -9,6 +9,7 @@ use App\Form\MenuDateStepType;
 use App\Form\MenuType;
 use App\Repository\MenuRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\SeasonRepository;
 use App\Service\MenuService;
 use App\Service\ShiftService;
 use DateTime;
@@ -44,7 +45,7 @@ class MenuController extends AbstractController
      * @return Response
      * @throws \DateMalformedStringException
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository, SeasonRepository $seasonRepository): Response
     {
         $menu            = new Menu();
         $menuTypeOptions = [ MenuType::OPT_KEY_MODE => MenuType::OPT_ARG_MODE_NEW ];
@@ -56,6 +57,8 @@ class MenuController extends AbstractController
             $start  = $menu->getStartedAt();
             $end    = $menu->getFinishedAt();
             $shifts = $shiftService->getShiftsByMenuDates($start, $end);
+            $seasons = $seasonRepository->findSeasonByDate($start);
+
             foreach($shifts as $shiftIdentifier) {
                 $shift = new Shift();
                 $shift->setIdentifier($shiftIdentifier);
@@ -67,6 +70,7 @@ class MenuController extends AbstractController
                 'form_shift_step' => $formShiftStep->createView(),
                 'date_step'       => false,
                 'recipes'         => $recipes,
+                'seasons'         => $seasons,
             ]);
         }
 
