@@ -24,6 +24,7 @@ class RecipeTypeFixtures extends Fixture
             $recipeType = new RecipeType();
             $recipeType->setName($recipeTypeName);
             $manager->persist($recipeType);
+            $this->addReference($recipeTypeName, $recipeType);
         }
 
         $manager->flush();

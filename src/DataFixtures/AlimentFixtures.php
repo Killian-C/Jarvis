@@ -63,7 +63,7 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
         ],
         'Chorizo'   => [
             'Viande',
-            'g',
+            'unité',
             'Supermarché'
         ],
         'Riz'       => [
@@ -83,6 +83,7 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             $aliment->setShopPlace($this->getReference($data[2]));
             $aliment->setPrettyName(sprintf('%s (%s)', $alimentName, $data[1]));
             $manager->persist($aliment);
+            $this->addReference($alimentName, $aliment);
         }
 
         $manager->flush();
