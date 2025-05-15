@@ -3,15 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Dish;
+use App\Entity\Ingredient;
 use App\Entity\Menu;
+use App\Entity\RecipeType;
 use App\Entity\Shift;
 use App\Form\MenuDateStepType;
 use App\Form\MenuType;
 use App\Repository\MenuRepository;
 use App\Repository\RecipeRepository;
+use App\Repository\RecipeTypeRepository;
 use App\Repository\SeasonRepository;
 use App\Service\MenuService;
 use App\Service\ShiftService;
+use DateMalformedStringException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,10 +46,19 @@ class MenuController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param ShiftService $shiftService
      * @param RecipeRepository $recipeRepository
+     * @param SeasonRepository $seasonRepository
+     * @param RecipeTypeRepository $recipeTypeRepository
      * @return Response
-     * @throws \DateMalformedStringException
+     * @throws DateMalformedStringException
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, ShiftService $shiftService, RecipeRepository $recipeRepository, SeasonRepository $seasonRepository): Response
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ShiftService $shiftService,
+        RecipeRepository $recipeRepository,
+        SeasonRepository $seasonRepository,
+        RecipeTypeRepository $recipeTypeRepository
+    ): Response
     {
         $menu            = new Menu();
         $menuTypeOptions = [ MenuType::OPT_KEY_MODE => MenuType::OPT_ARG_MODE_NEW ];
@@ -67,10 +80,11 @@ class MenuController extends AbstractController
             $formShiftStep = $this->createForm(MenuType::class, $menu,$menuTypeOptions);
             $recipes       = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
             return $this->render('menu/new.html.twig', [
-                'form_shift_step' => $formShiftStep->createView(),
-                'date_step'       => false,
-                'recipes'         => $recipes,
-                'seasons'         => $seasons,
+                'form_shift_step'  => $formShiftStep->createView(),
+                'date_step'        => false,
+                'recipes'          => $recipes,
+                'seasons'          => $seasons,
+                'all_recipe_types' => $recipeTypeRepository->findAll(),
             ]);
         }
 
@@ -88,8 +102,9 @@ class MenuController extends AbstractController
         }
 
         return $this->render('menu/new.html.twig', [
-            'form_date_step' => $formDateStep->createView(),
-            'date_step'      => true
+            'form_date_step'   => $formDateStep->createView(),
+            'date_step'        => true,
+            'all_recipe_types' => $recipeTypeRepository->findAll(),
         ]);
     }
 
@@ -98,7 +113,6 @@ class MenuController extends AbstractController
      */
     public function show(Menu $menu): Response
     {
-        //TODO faire une méthode prepareShiftsToRender pour limiter la logique dans le twig, gros cochon
         return $this->render('menu/show.html.twig', [
             'menu' => $menu
         ]);
@@ -106,9 +120,11 @@ class MenuController extends AbstractController
 
     /**
      * @Route("/edit/{id}", name="edit", methods={"POST"})
+     * @throws DateMalformedStringException
      */
-    public function edit(Menu $menu, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
+    public function edit(Menu $menu, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository, SeasonRepository $seasonRepository): Response
     {
+        $seasons = $seasonRepository->findSeasonByDate($menu->getStartedAt());
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
 
@@ -131,6 +147,7 @@ class MenuController extends AbstractController
             'form_shift_step' => $form->createView(),
             'date_step'       => false,
             'recipes'         => $recipes,
+            'seasons'         => $seasons,
         ]);
     }
 

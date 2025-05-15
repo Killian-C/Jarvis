@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\AlimentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use JsonException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,6 +115,39 @@ class RecipeController extends AbstractController
         $entityManager->remove($recipe);
         $entityManager->flush();
         return $this->redirectToRoute('recipe_index');
+    }
+
+    /**
+     * @Route("/async-get-by-ingredient-or-title", name="async_search")
+     * Example : http://localhost/recipe/async-get-by-ingredient-or-title?search=riz
+     */
+    public function asyncGetRecipesByIngredientOrTitle(Request $request, RecipeRepository $recipeRepository): JsonResponse
+    {
+        $value = $request->get('search');
+        $recipes = $recipeRepository->findByTitleOrIngredient($value);
+
+        $data = array_map(static function (Recipe $recipe) {
+
+            $ingredientNames = array_map(static function (Ingredient $ingredient) {
+                return $ingredient->getAliment()->getName();
+            }, $recipe->getIngredients()->toArray());
+
+            return [
+                'id' => $recipe->getId(),
+                'title' => $recipe->getTitle(),
+                'searchText' => $recipe->getTitle() . ' ' . implode(' ', $ingredientNames),
+                'ingredients' => array_map(static function (Ingredient $ingredient) {
+                    return [
+                        'id' => $ingredient->getId(),
+                        'aliment' => $ingredient->getAliment()->getName()
+                    ];
+                }, $recipe->getIngredients()->toArray()),
+            ];
+        }, $recipes);
+
+        return new JsonResponse(
+            $data, Response::HTTP_OK
+        );
     }
 }
 

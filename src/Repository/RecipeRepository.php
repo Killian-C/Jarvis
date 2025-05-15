@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Recipe;
+use App\Entity\Ingredient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Recipe|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,24 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    // /**
-    //  * @return Recipe[] Returns an array of Recipe objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByTitleOrIngredient(string $value)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $ingredientRepository = $this->getEntityManager()->getRepository(Ingredient::class);
+        $ingredients = $ingredientRepository->findLikeByName($value);
 
-    /*
-    public function findOneBySomeField($value): ?Recipe
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+
+        $qb = $this->createQueryBuilder('r');
+
+        $qb
+            ->join('r.ingredients', 'i')
+            ->where('r.title LIKE :title')
+            ->orWhere(
+                $qb->expr()->in('i', ':ingredients')
+            )
+            ->setParameter('title', '%' . $value . '%')
+            ->setParameter('ingredients', $ingredients)
         ;
+
+        return $qb->getQuery()->getResult();
     }
-    */
 }

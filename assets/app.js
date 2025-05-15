@@ -15,3 +15,6 @@ import './bootstrap';
 const $ = require('jquery');
 require('bootstrap');
 
+import TomSelect from 'tom-select';
+import 'tom-select/dist/css/tom-select.bootstrap4.css';
+window.TomSelect = TomSelect;

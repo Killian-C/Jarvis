@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Aliment;
 use App\Entity\Ingredient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +20,17 @@ class IngredientRepository extends ServiceEntityRepository
         parent::__construct($registry, Ingredient::class);
     }
 
-    // /**
-    //  * @return Ingredient[] Returns an array of Ingredient objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findLikeByName(string $value)
     {
+        /** @var AlimentRepository $alimentRepository */
+        $alimentRepository = $this->getEntityManager()->getRepository(Aliment::class);
+        $aliments = $alimentRepository->findLikeByName($value);
+
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('i.aliment IN (:aliments)')
+            ->setParameter('aliments', $aliments)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Ingredient
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -31,6 +31,9 @@ class DishType extends AbstractType
                 'class' => Recipe::class,
                 'choice_label' => 'title',
                 'placeholder'  => 'Choose Recipe',
+                'attr' => [
+                    'class' => 'tom-select-recipes',
+                ]
             ])
             ->add('peopleCount', IntegerType::class, $peopleCountTypeOptions)
         ;
