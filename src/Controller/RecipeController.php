@@ -8,7 +8,6 @@ use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\AlimentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -119,15 +118,21 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/async-get-by-ingredient-or-title", name="async_search")
-     * Example : http://localhost/recipe/async-get-by-ingredient-or-title?search=riz
+     * Example : http://localhost/recipe/async-get-by-ingredient-or-title?search=riz&inRecipeTypes="Plat, Plat trash"
      */
     public function asyncGetRecipesByIngredientOrTitle(Request $request, RecipeRepository $recipeRepository): JsonResponse
     {
         $value = $request->get('search');
-        $recipes = $recipeRepository->findByTitleOrIngredient($value);
+        $recipeTypesQuery = $request->get('inRecipeTypes');
+        $recipeTypes = $recipeTypesQuery !== ""
+            ? array_map(static function ($value) {
+                return trim($value);
+            }, explode(',', ($recipeTypesQuery)))
+            : []
+        ;
+        $recipes = $recipeRepository->findByTitleOrIngredientInRecipeTypes($value, $recipeTypes);
 
         $data = array_map(static function (Recipe $recipe) {
-
             $ingredientNames = array_map(static function (Ingredient $ingredient) {
                 return $ingredient->getAliment()->getName();
             }, $recipe->getIngredients()->toArray());

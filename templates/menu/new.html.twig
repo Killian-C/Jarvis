@@ -4,7 +4,6 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('dishEmbedForm') }}
-    {{ encore_entry_script_tags('menuForm') }}
 {% endblock %}
 {% if date_step %}
     {% form_theme form_date_step 'bootstrap_4_layout.html.twig' %}
@@ -43,10 +42,14 @@
                     {% endfor %}
                 </ul>
                 <p>Types de recettes :</p>
-                <select id="select-recipe-type" name="types[]" multiple placeholder="Ajouter un filtre de type" autocomplete="off">
+                <select id="select-recipe-type" name="types[]" multiple autocomplete="off" data-recipe-types="">
                     <option value="">Ajouter un filtre de type</option>
                     {% for type in all_recipe_types %}
-                        <option>{{ type.name }}</option>
+                        {% if type.name in ["Plat", "Plat trash"] %}
+                            <option selected>{{ type.name }}</option>
+                        {% else %}
+                            <option>{{ type.name }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>

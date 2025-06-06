@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use App\Entity\Ingredient;
+use App\Entity\RecipeType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use function Doctrine\ORM\QueryBuilder;
@@ -21,23 +22,34 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    public function findByTitleOrIngredient(string $value)
+    public function findByTitleOrIngredientInRecipeTypes(string $value, array $recipeTypeNames)
     {
         $ingredientRepository = $this->getEntityManager()->getRepository(Ingredient::class);
-        $ingredients = $ingredientRepository->findLikeByName($value);
-
+        $ingredients          = $ingredientRepository->findLikeByName($value);
+        $recipeTypeRepository = $this->getEntityManager()->getRepository(RecipeType::class);
+        $recipeTypes          = $recipeTypeRepository->findByNames($recipeTypeNames);
 
         $qb = $this->createQueryBuilder('r');
 
         $qb
             ->join('r.ingredients', 'i')
-            ->where('r.title LIKE :title')
-            ->orWhere(
-                $qb->expr()->in('i', ':ingredients')
-            )
-            ->setParameter('title', '%' . $value . '%')
-            ->setParameter('ingredients', $ingredients)
+            ->join('r.recipeType', 'rt')
         ;
+
+        if ($value !== '') {
+            $qb
+                ->where('r.title LIKE :title')
+                ->orWhere(
+                    $qb->expr()->in('i', ':ingredients')
+                )
+                ->setParameter('title', '%' . $value . '%')
+                ->setParameter('ingredients', $ingredients)
+            ;
+        }
+
+        if (count($recipeTypeNames) > 0) {
+            $qb->andWhere($qb->expr()->in('rt.name', ':recipeTypes'))->setParameter('recipeTypes', $recipeTypeNames);
+        }
 
         return $qb->getQuery()->getResult();
     }

@@ -1,6 +1,25 @@
 const mainContainer = document.getElementById('shifts-container');
 const asyncSearchUrl = mainContainer.dataset.asyncUrl;
 const dishBlocks = document.getElementsByClassName('dishes-block');
+
+// *** Filtre par recipeTypes ***
+const selectRecipeType = document.getElementById('select-recipe-type');
+const defautRecipeTypes = Array.from(selectRecipeType.options).filter(option => option.selected).map(option => option.value);
+let recipeTypesPicked = selectRecipeType.dataset.recipeTypes !== "" ? selectRecipeType.dataset.recipeTypes : defautRecipeTypes;
+new TomSelect(selectRecipeType,{
+    plugins: ['input_autogrow'],
+    items: defautRecipeTypes,
+    onItemAdd: function() {
+        recipeTypesPicked = this.items;
+        clearOptionsForAllTomSelects();
+    },
+    onItemRemove: function () {
+        recipeTypesPicked = this.items;
+        clearOptionsForAllTomSelects();
+    }
+});
+// *********************************
+
 dishBlocks.forEach( container => {
     let dishForm  = container.dataset.prototype;
     let id        = container.getAttribute('data-block-id');
@@ -46,6 +65,16 @@ dishBlocks.forEach( container => {
     });
 });
 
+const clearOptionsForAllTomSelects = () => {
+    dishBlocks.forEach( container => {
+        container.querySelectorAll('.tom-select-recipes').forEach((el) => {
+            if (el.tomselect) {
+                el.tomselect.clearOptions();
+            }
+        })
+    })
+}
+
 const initTomSelect = (selectInput) => {
     new TomSelect(selectInput, {
         valueField: 'id',
@@ -53,7 +82,7 @@ const initTomSelect = (selectInput) => {
         searchField: ['title', 'searchText'],
         options: [],
         load: function(query, callback) {
-            let url = `${asyncSearchUrl}?search=${encodeURIComponent(query)}`;
+            let url = `${asyncSearchUrl}?search=${encodeURIComponent(query)}&inRecipeTypes=${recipeTypesPicked}`;
             fetch(url)
                 .then(response => {
                     return response.json()
@@ -62,7 +91,7 @@ const initTomSelect = (selectInput) => {
                     callback(items)
                 })
                 .catch((e)=>{
-                    console.warn("result warn", e)
+                    console.error(`Error during recipes fetching : ${e}`)
                     callback();
                 });
         },

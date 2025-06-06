@@ -19,32 +19,14 @@ class RecipeTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeType::class);
     }
 
-    // /**
-    //  * @return RecipeType[] Returns an array of RecipeType objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByNames(array $names)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $qb = $this->createQueryBuilder('rt');
+        $qb
+            ->where($qb->expr()->in('rt.name', ':names'))
+            ->setParameter('names', $names)
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?RecipeType
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $qb->getQuery()->getResult();
     }
-    */
 }
