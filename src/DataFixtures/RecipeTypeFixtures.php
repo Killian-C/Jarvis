@@ -8,19 +8,9 @@ use Doctrine\Persistence\ObjectManager;
 
 class RecipeTypeFixtures extends Fixture
 {
-    public const RECIPE_TYPES = [
-        'Entrée',
-        'Plat',
-        'Dessert',
-        'Snack',
-        'Apéro',
-        'Plat trash',
-        'Petit déj\''
-    ];
-
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach (self::RECIPE_TYPES as $recipeTypeName) {
+        foreach (RecipeType::RECIPE_TYPES as $recipeTypeName) {
             $recipeType = new RecipeType();
             $recipeType->setName($recipeTypeName);
             $manager->persist($recipeType);

@@ -80,11 +80,12 @@ class MenuController extends AbstractController
             $formShiftStep = $this->createForm(MenuType::class, $menu,$menuTypeOptions);
             $recipes       = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
             return $this->render('menu/new.html.twig', [
-                'form_shift_step'  => $formShiftStep->createView(),
-                'date_step'        => false,
-                'recipes'          => $recipes,
-                'seasons'          => $seasons,
-                'all_recipe_types' => $recipeTypeRepository->findAll(),
+                'form_shift_step'             => $formShiftStep->createView(),
+                'date_step'                   => false,
+                'recipes'                     => $recipes,
+                'seasons'                     => $seasons,
+                'all_recipe_types'            => $recipeTypeRepository->findAll(),
+                'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS
             ]);
         }
 
@@ -122,7 +123,14 @@ class MenuController extends AbstractController
      * @Route("/edit/{id}", name="edit", methods={"POST"})
      * @throws DateMalformedStringException
      */
-    public function edit(Menu $menu, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository, SeasonRepository $seasonRepository): Response
+    public function edit(
+        Menu $menu,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        RecipeRepository $recipeRepository,
+        SeasonRepository $seasonRepository,
+        RecipeTypeRepository $recipeTypeRepository
+    ): Response
     {
         $seasons = $seasonRepository->findSeasonByDate($menu->getStartedAt());
         $form = $this->createForm(MenuType::class, $menu);
@@ -143,11 +151,13 @@ class MenuController extends AbstractController
         $recipes = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
 
         return $this->render('menu/edit.html.twig', [
-            'menu'            => $menu,
-            'form_shift_step' => $form->createView(),
-            'date_step'       => false,
-            'recipes'         => $recipes,
-            'seasons'         => $seasons,
+            'menu'                        => $menu,
+            'form_shift_step'             => $form->createView(),
+            'date_step'                   => false,
+            'recipes'                     => $recipes,
+            'seasons'                     => $seasons,
+            'all_recipe_types'            => $recipeTypeRepository->findAll(),
+            'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS
         ]);
     }
 

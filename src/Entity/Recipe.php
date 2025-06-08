@@ -24,28 +24,29 @@ class Recipe
      * @ORM\Column(type="string", length=255)
      * @AcmeAssert\UniqueRecipe()
      */
-    private $title;
+    private ?string $title;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="recipe", orphanRemoval=true, cascade={"persist"})
      */
-    private $ingredients;
+    private Collection $ingredients;
 
     /**
      * @ORM\ManyToOne(targetEntity=RecipeType::class, inversedBy="recipes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $recipeType;
+    private ?RecipeType $recipeType;
 
     /**
      * @ORM\ManyToOne(targetEntity=Season::class, inversedBy="recipes")
      */
-    private $season;
+    private ?Season $season;
+
 
     public function __construct()
     {

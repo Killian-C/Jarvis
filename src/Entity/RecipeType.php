@@ -13,6 +13,29 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RecipeType
 {
+    public const RECIPE_TYPES = [
+        self::START,
+        self::MAIN,
+        self::TRASH_MAIN,
+        self::DESSERT,
+        self::SNACK,
+        self::APERITIF,
+        self::BREAKFAST,
+    ];
+
+    public const DEFAULT_TYPE_FILTERS = [
+      self::MAIN,
+      self::TRASH_MAIN
+    ];
+
+    public const START = 'Entrée';
+    public const MAIN = 'Plat';
+    public const TRASH_MAIN = 'Plat trash';
+    public const DESSERT = 'Dessert';
+    public const SNACK = 'Snack';
+    public const APERITIF = 'Apéro';
+    public const BREAKFAST = 'Petit déj\'';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,12 +47,12 @@ class RecipeType
      * @ORM\Column(type="string", length=100)
      * @AcmeAssert\UniqueRecipeType()
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Recipe::class, mappedBy="recipeType")
      */
-    private $recipes;
+    private Collection $recipes;
 
     public function __construct()
     {

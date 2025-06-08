@@ -45,7 +45,7 @@
                 <select id="select-recipe-type" name="types[]" multiple autocomplete="off" data-recipe-types="">
                     <option value="">Ajouter un filtre de type</option>
                     {% for type in all_recipe_types %}
-                        {% if type.name in ["Plat", "Plat trash"] %}
+                        {% if type.name in default_recipe_type_filters %}
                             <option selected>{{ type.name }}</option>
                         {% else %}
                             <option>{{ type.name }}</option>
