@@ -51,6 +51,6 @@ class RecipeRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->in('rt.name', ':recipeTypes'))->setParameter('recipeTypes', $recipeTypeNames);
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->orderBy('r.duration', 'ASC')->getQuery()->getResult();
     }
 }

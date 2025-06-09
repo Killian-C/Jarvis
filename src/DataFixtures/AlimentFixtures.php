@@ -71,6 +71,16 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'g',
             'Bio / Vrac'
         ],
+        'Fromage'       => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Truffe'       => [
+            'Légume',
+            'unité',
+            'Bio / Vrac'
+        ],
     ];
 
     public function load(ObjectManager $manager)

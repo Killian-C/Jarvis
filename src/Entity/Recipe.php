@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Recipe
 {
+    public const FAST          = 10;
+    public const FAST_LABEL    = 'Rapide (15 min. env.)';
+    public const AVERAGE       = 20;
+    public const AVERAGE_LABEL = 'Normal (30-45 min. env.)';
+    public const LONG          = 30;
+    public const LONG_LABEL    = 'Long (plus d\'1h)';
+    public const RECIPE_DURATION_DETAILS = [
+        self::FAST_LABEL    => self::FAST,
+        self::AVERAGE_LABEL => self::AVERAGE,
+        self::LONG_LABEL    => self::LONG,
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,12 +52,17 @@ class Recipe
      * @ORM\ManyToOne(targetEntity=RecipeType::class, inversedBy="recipes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?RecipeType $recipeType;
+    private RecipeType $recipeType;
 
     /**
      * @ORM\ManyToOne(targetEntity=Season::class, inversedBy="recipes")
      */
     private ?Season $season;
+
+    /**
+     * @ORM\Column(type="integer", length=100, nullable=true)
+     */
+    private ?string $duration;
 
 
     public function __construct()
@@ -137,6 +154,18 @@ class Recipe
     public function setSeason(?Season $season): self
     {
         $this->season = $season;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): self
+    {
+        $this->duration = $duration;
 
         return $this;
     }

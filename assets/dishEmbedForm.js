@@ -2,6 +2,47 @@ const mainContainer = document.getElementById('shifts-container');
 const asyncSearchUrl = mainContainer.dataset.asyncUrl;
 const dishBlocks = document.getElementsByClassName('dishes-block');
 
+
+const initTomSelect = (selectInput) => {
+
+    const selectedValue = selectInput.value;
+    const selectedText = selectInput.options[selectInput.selectedIndex]?.text ?? '';
+    const selectedOption = selectedValue
+        ? [{ id: selectedValue, title: selectedText }]
+        : [];
+
+    new TomSelect(selectInput, {
+        valueField: 'id',
+        labelField: 'title',
+        searchField: ['title', 'searchText'],
+        options: selectedOption,
+        items: selectedValue ? [selectedValue] : [],
+        sortField: [{field:'$order'},{field:'$score'}],
+        load: function(query, callback) {
+            let url = `${asyncSearchUrl}?search=${encodeURIComponent(query)}&inRecipeTypes=${recipeTypesPicked}`;
+            fetch(url)
+                .then(response => {
+                    return response.json()
+                })
+                .then(items => {
+                    callback(items)
+                })
+                .catch((e)=>{
+                    console.error(`Error during recipes fetching : ${e}`)
+                    callback();
+                });
+        },
+        onFocus: function() {
+            this.load('');
+        },
+        render: {
+            option: function (data, escape) {
+                return `<p>${escape(data.title)}</p>`
+            }
+        }
+    });
+}
+
 // *** Filtre par recipeTypes ***
 const selectRecipeType = document.getElementById('select-recipe-type');
 const defautRecipeTypes = Array.from(selectRecipeType.options).filter(option => option.selected).map(option => option.value);
@@ -73,35 +114,4 @@ const clearOptionsForAllTomSelects = () => {
             }
         })
     })
-}
-
-const initTomSelect = (selectInput) => {
-    new TomSelect(selectInput, {
-        valueField: 'id',
-        labelField: 'title',
-        searchField: ['title', 'searchText'],
-        options: [],
-        load: function(query, callback) {
-            let url = `${asyncSearchUrl}?search=${encodeURIComponent(query)}&inRecipeTypes=${recipeTypesPicked}`;
-            fetch(url)
-                .then(response => {
-                    return response.json()
-                })
-                .then(items => {
-                    callback(items)
-                })
-                .catch((e)=>{
-                    console.error(`Error during recipes fetching : ${e}`)
-                    callback();
-                });
-        },
-        onFocus: function() {
-            this.load('');
-        },
-        render: {
-            option: function (data, escape) {
-                return `<p>${escape(data.title)}</p>`
-            }
-        }
-    });
 }

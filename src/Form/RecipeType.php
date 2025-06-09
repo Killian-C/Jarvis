@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeType as Type;
 use App\Entity\Season;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +23,12 @@ class RecipeType extends AbstractType
                 'class'        => Type::class,
                 'choice_label' => 'name',
                 'placeholder'  => 'Sélectionner le type de recette'
+            ])
+            ->add('duration', ChoiceType::class, [
+                'choices'  => Recipe::RECIPE_DURATION_DETAILS,
+                'label'    => 'Rapidité d\'exécution',
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('season', EntityType::class, [
                 'class'        => Season::class,

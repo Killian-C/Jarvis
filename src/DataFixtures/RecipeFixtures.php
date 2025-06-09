@@ -16,7 +16,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class RecipeFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public const RECIPES = [
         'La poule et le cochon' => [
             'description' => 'faire la recette',
@@ -25,7 +24,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Bacon' => 5
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons'
+            'season' => 'Toutes saisons',
+            'duration' => Recipe::FAST,
         ],
         'Pain' => [
             'description' => 'faire la recette',
@@ -33,7 +33,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Farine' => 100,
             ],
             'type' => 'Snack',
-            'season' => 'Été'
+            'season' => 'Été',
+            'duration' => Recipe::LONG,
         ],
         'Toast veggie' => [
             'description' => 'faire la recette',
@@ -41,7 +42,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Aubergine' => 3,
             ],
             'type' => 'Entrée',
-            'season' => 'Été'
+            'season' => 'Été',
+            'duration' => Recipe::FAST,
         ],
         'Flan vert indien' => [
             'description' => 'faire la recette',
@@ -50,7 +52,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Curry' => 20
             ],
             'type' => 'Plat',
-            'season' => 'Été'
+            'season' => 'Été',
+            'duration' => Recipe::AVERAGE,
         ],
         'Apéro piquant' => [
             'description' => 'faire la recette',
@@ -58,7 +61,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Chorizo' => 12,
             ],
             'type' => 'Apéro',
-            'season' => 'Hiver'
+            'season' => 'Hiver',
+            'duration' => Recipe::FAST,
         ],
         'Riz cantonais d\'automne' => [
             'description' => 'faire la recette',
@@ -66,7 +70,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Riz' => 250,
             ],
             'type' => 'Plat',
-            'season' => 'Automne'
+            'season' => 'Automne',
+            'duration' => Recipe::AVERAGE,
         ],
         'Riz au lait' => [
             'description' => 'faire la recette',
@@ -75,7 +80,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Sucre' => 12.5
             ],
             'type' => 'Dessert',
-            'season' => 'Printemps'
+            'season' => 'Printemps',
+            'duration' => Recipe::AVERAGE,
         ],
         'Poivrons farcis' => [
             'description' => 'faire la recette',
@@ -84,7 +90,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Bacon' => 7
             ],
             'type' => 'Plat',
-            'season' => 'Printemps'
+            'season' => 'Printemps',
+            'duration' => Recipe::LONG,
         ],
         'Ratatouille' => [
             'description' => 'faire la recette',
@@ -93,7 +100,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Tomate' => 7
             ],
             'type' => 'Plat',
-            'season' => 'Automne'
+            'season' => 'Automne',
+            'duration' => Recipe::LONG,
         ],
         'Fajitas' => [
             'description' => 'faire la recette',
@@ -102,7 +110,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Tomate' => 7
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons'
+            'season' => 'Toutes saisons',
+            'duration' => Recipe::AVERAGE,
         ],
         'Flammekueche' => [
             'description' => 'faire la recette',
@@ -111,11 +120,43 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Farine' => 100
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons'
+            'season' => 'Toutes saisons',
+            'duration' => Recipe::FAST,
         ],
+        'Pizza rapide toutes saisons' => [
+            'description' => 'faire la recette',
+            'ingredients' => [
+                'Fromage' => 350,
+                'Farine' => 100
+            ],
+            'type' => 'Plat',
+            'season' => 'Toutes saisons',
+            'duration' => Recipe::FAST,
+        ],
+        'Pizza normale toutes saisons' => [
+            'description' => 'faire la recette',
+            'ingredients' => [
+                'Tomate' => 5,
+                'Farine' => 100
+            ],
+            'type' => 'Plat',
+            'season' => 'Toutes saisons',
+            'duration' => Recipe::AVERAGE,
+        ],
+        'Pizza longue toutes saisons' => [
+            'description' => 'faire la recette',
+            'ingredients' => [
+                'Truffe' => 1,
+                'Farine' => 100
+            ],
+            'type' => 'Plat',
+            'season' => 'Toutes saisons',
+            'duration' => Recipe::LONG,
+        ],
+
     ];
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach (self::RECIPES as $recipeTitle => $data) {
             $recipe = new Recipe();
@@ -129,13 +170,14 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             }
             $recipe->setRecipeType($this->getReference($data['type']));
             $recipe->setSeason($this->getReference($data['season']));
+            $recipe->setDuration($data['duration']);
             $manager->persist($recipe);
         }
 
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             AlimentFixtures::class,
