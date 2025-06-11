@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Aliment;
 use App\Form\AlimentType;
+use App\Repository\AlimentRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,5 +88,29 @@ class AlimentController extends AbstractController
     private function buildPrettyName(Aliment $aliment): string
     {
         return sprintf('%s (%s)', $aliment->getName(), $aliment->getUnit()->getName());
+    }
+
+    /**
+     * @param Request $request
+     * @param AlimentRepository $alimentRepository
+     * @Route("/async-get-by-name", name="async_search")
+     * Example : http://localhost/recipe/async-get-by-name?search=riz
+     * @return JsonResponse
+     */
+    public function asyncGetAlimentsByName(Request $request, AlimentRepository $alimentRepository): JsonResponse
+    {
+        $value = $request->get('search');
+        $aliments = $alimentRepository->findLikeByName($value);
+
+        $data = array_map(static function (Aliment $aliment) {
+            return [
+                'id' => $aliment->getId(),
+                'name' => $aliment->getPrettyName(),
+            ];
+        }, $aliments);
+
+        return new JsonResponse(
+            $data, Response::HTTP_OK
+        );
     }
 }

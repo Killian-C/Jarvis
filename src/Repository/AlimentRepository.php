@@ -23,6 +23,7 @@ class AlimentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->where('a.name LIKE :name')
+            ->orderBy('a.name', 'ASC')
             ->setParameter('name', sprintf('%%%s%%', $value))
             ->getQuery()
             ->getResult()

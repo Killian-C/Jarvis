@@ -3,6 +3,46 @@ ingredientForm = ingredientsContainer.dataset.prototype;
 addIngredientButton = document.getElementById('add-ingredient');
 let index = 0;
 const regex = /__name__/g;
+const asyncIngredientsUrl = ingredientsContainer.dataset.asyncIngredientsUrl;
+
+const initIngredientTomSelect = (selectInput) => {
+
+    const selectedValue = selectInput.value;
+    const selectedText = selectInput.options[selectInput.selectedIndex]?.text ?? '';
+    const selectedOption = selectedValue
+        ? [{ id: selectedValue, name: selectedText }]
+        : [];
+
+    new TomSelect(selectInput, {
+        options: selectedOption,
+        items: selectedValue ? [selectedValue] : [],
+        valueField: 'id',
+        labelField: 'name',
+        searchField: ['name'],
+        sortField: [{field:'$order'},{field:'$score'}],
+        load: function(query, callback) {
+            let url = `${asyncIngredientsUrl}?search=${encodeURIComponent(query)}`;
+            fetch(url)
+                .then(response => {
+                    return response.json()
+                })
+                .then(items => {
+                    callback(items)
+                })
+                .catch((e)=>{
+                    console.error(`Error during aliments fetching : ${e}`)
+                    callback();
+                });
+        },
+    });
+}
+
+ingredientsContainer.querySelectorAll('.tom-select-ingredients').forEach((el) => {
+    if (!el.tomselect) {
+        initIngredientTomSelect(el)
+    }
+});
+
 addIngredientButton.addEventListener('click', (e) => {
     e.preventDefault();
     index++;
@@ -22,4 +62,9 @@ addIngredientButton.addEventListener('click', (e) => {
     listedForm.appendChild(deleteBtn);
 
     ingredientsContainer.appendChild(listedForm);
+
+    const newSelect = listedForm.querySelector('.tom-select-ingredients');
+    if (newSelect && !newSelect.tomselect) {
+        initIngredientTomSelect(newSelect);
+    }
 })

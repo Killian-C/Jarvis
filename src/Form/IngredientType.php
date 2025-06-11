@@ -20,6 +20,9 @@ class IngredientType extends AbstractType
                 'class'        => Aliment::class,
                 'choice_label' => 'prettyName',
                 'placeholder'  => 'Choose Aliment',
+                'attr' => [
+                    'class' => 'tom-select-ingredients',
+                ],
             ])
             ->add('quantity')
         ;
