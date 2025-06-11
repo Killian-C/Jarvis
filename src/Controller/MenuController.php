@@ -50,6 +50,7 @@ class MenuController extends AbstractController
      * @param RecipeTypeRepository $recipeTypeRepository
      * @return Response
      * @throws DateMalformedStringException
+     * @throws \Exception
      */
     public function new(
         Request $request,
@@ -70,7 +71,7 @@ class MenuController extends AbstractController
             $start  = $menu->getStartedAt();
             $end    = $menu->getFinishedAt();
             $shifts = $shiftService->getShiftsByMenuDates($start, $end);
-            $seasons = $seasonRepository->findSeasonByDate($start);
+            $seasons = $seasonRepository->findSeasonByDate(new DateTime($start->format('Y-m-d')));
 
             foreach($shifts as $shiftIdentifier) {
                 $shift = new Shift();
