@@ -26,6 +26,11 @@ class UniqueShopPlaceValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueShopPlace::class);
         }
 
+        $entity = $this->context->getObject();
+        if ($entity && $entity->getId()) {
+            return;
+        }
+
         if (null === $value || '' === $value) {
             return;
         }

@@ -26,6 +26,11 @@ class UniqueCategoryValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueCategory::class);
         }
 
+        $entity = $this->context->getObject();
+        if ($entity && $entity->getId()) {
+            return;
+        }
+
         if (null === $value || '' === $value) {
             return;
         }

@@ -26,6 +26,11 @@ class UniqueSeasonValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueSeason::class);
         }
 
+        $entity = $this->context->getObject();
+        if ($entity && $entity->getId()) {
+            return;
+        }
+
         if (null === $value || '' === $value) {
             return;
         }
