@@ -2,7 +2,6 @@ const mainContainer = document.getElementById('shifts-container');
 const asyncSearchUrl = mainContainer.dataset.asyncUrl;
 const dishBlocks = document.getElementsByClassName('dishes-block');
 
-
 const initTomSelect = (selectInput) => {
 
     const selectedValue = selectInput.value;
@@ -43,6 +42,27 @@ const initTomSelect = (selectInput) => {
     });
 }
 
+const addRemovedBtn = (elementToRemove) => {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML  = '<i class="fas fa-trash"></i>'
+    deleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        elementToRemove.remove();
+    })
+    elementToRemove.appendChild(deleteBtn);
+}
+
+const clearOptionsForAllTomSelects = () => {
+    dishBlocks.forEach( container => {
+        container.querySelectorAll('.tom-select-recipes').forEach((el) => {
+            if (el.tomselect) {
+                el.tomselect.clearOptions();
+            }
+        })
+    })
+}
+
+
 // *** Filtre par recipeTypes ***
 const selectRecipeType = document.getElementById('select-recipe-type');
 const defautRecipeTypes = Array.from(selectRecipeType.options).filter(option => option.selected).map(option => option.value);
@@ -75,6 +95,25 @@ dishBlocks.forEach( container => {
         el.classList.remove('form-control');
     })
 
+    container.querySelectorAll('.async-delete-dish-button').forEach((btn) => {
+        const deleteDishUrl= btn.dataset.asyncDeleteDishUrl;
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                fetch(deleteDishUrl, {
+                    method: 'post'
+                    })
+                    .then(response => {
+                        return response.json;
+                    })
+                    .catch((e)=>{
+                        console.error(`Error during dish deleting : ${e}`)
+                    });
+                btn.parentElement.remove()
+            });
+        }
+    });
+
     addButton.addEventListener('click', (e) => {
         e.preventDefault();
         let dishCount = addButton.getAttribute('data-dish-index');
@@ -85,13 +124,7 @@ dishBlocks.forEach( container => {
         const regexDish      = /__name__/g;
         listedForm.innerHTML = dishForm.replace(regexDish, 'dish_' + dishCount);
 
-        const deleteBtn = document.createElement('button');
-        deleteBtn.innerHTML  = '<i class="fas fa-trash"></i>'
-        deleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            listedForm.remove();
-        })
-        listedForm.appendChild(deleteBtn);
+        addRemovedBtn(listedForm)
 
         container.appendChild(listedForm);
 
@@ -105,13 +138,3 @@ dishBlocks.forEach( container => {
         })
     });
 });
-
-const clearOptionsForAllTomSelects = () => {
-    dishBlocks.forEach( container => {
-        container.querySelectorAll('.tom-select-recipes').forEach((el) => {
-            if (el.tomselect) {
-                el.tomselect.clearOptions();
-            }
-        })
-    })
-}

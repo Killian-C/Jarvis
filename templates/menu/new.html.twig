@@ -61,6 +61,12 @@
                         {% for dish in shift.dishes %}
                             <li class="dish-form">
                                 {{ form_widget(dish) }}
+                                <button
+                                    class="async-delete-dish-button"
+                                    data-async-delete-dish-url="{{ path("menu_async_delete_dish", {'id': dish.vars.value.id}) }}"
+                                >
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </li>
                         {% endfor %}
                     </ul>

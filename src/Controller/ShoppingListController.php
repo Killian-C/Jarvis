@@ -101,7 +101,13 @@ class ShoppingListController extends AbstractController
     ): Response
     {
         //On est sensé n'avoir qu'une seule liste de course
-        $shoppingList = $shoppingListRepository->findAll()[0];
+        $shoppingLists = $shoppingListRepository->findAll();
+        if ($shoppingLists !== []) {
+            $shoppingList = $shoppingLists[0];
+        } else {
+            $shoppingList = new ShoppingList();
+            $em->persist($shoppingList);
+        }
         $listItems    = $listItemService->extractItemsFromMenu($menu, $shoppingList);
 
         foreach ($listItems as $listItem) {

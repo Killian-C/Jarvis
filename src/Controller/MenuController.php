@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Dish;
-use App\Entity\Ingredient;
 use App\Entity\Menu;
 use App\Entity\RecipeType;
 use App\Entity\Shift;
@@ -13,13 +12,12 @@ use App\Repository\MenuRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\RecipeTypeRepository;
 use App\Repository\SeasonRepository;
-use App\Service\MenuService;
 use App\Service\ShiftService;
 use DateMalformedStringException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -146,7 +144,7 @@ class MenuController extends AbstractController
                 $entityManager->persist($shift);
             }
             $entityManager->flush();
-            $this->redirectToRoute('menu_index');
+            return $this->redirectToRoute('menu_index');
         }
 
         $recipes = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
@@ -184,6 +182,24 @@ class MenuController extends AbstractController
         $entityManager->remove($menu);
         $entityManager->flush();
         return $this->redirectToRoute('menu_index');
+    }
+
+    /**
+     * @param Dish $dish
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     * @Route("/async-delete-dish/{id}", name="async_delete_dish",methods={"POST"})
+     */
+    public function deleteDish(Dish $dish, EntityManagerInterface $entityManager): JsonResponse
+    {
+        try {
+            $entityManager->remove($dish);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            dump($e->getMessage());
+            return new JsonResponse(["error" => $e], 500);
+        }
+        return new JsonResponse([], 200);
     }
 }
 
