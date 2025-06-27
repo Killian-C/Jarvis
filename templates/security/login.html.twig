@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log toi !{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column align-items-center justify-content-center vh-80">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    Tu veux te déco {{ app.user.username }} ? C'est ici => <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+            <div class="d-flex flex-column align-items-center">
+                <div class="pb-4">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                </div>
+                <div class="pb-4">
+                    <label for="inputPassword">Sésame ouvre toi !!! (stp)</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+                <button class="btn btn-lg btn-primary" type="submit">
+                    Se connecter
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
