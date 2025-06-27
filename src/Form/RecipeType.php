@@ -17,9 +17,12 @@ class RecipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
+            ->add('title', null, [
+                'label' => 'Titre',
+            ])
             ->add('description')
             ->add('recipeType', EntityType::class, [
+                'label'        => 'Type',
                 'class'        => Type::class,
                 'choice_label' => 'name',
                 'placeholder'  => 'Sélectionner le type de recette'
@@ -31,6 +34,7 @@ class RecipeType extends AbstractType
                 'multiple' => false,
             ])
             ->add('season', EntityType::class, [
+                'label'        => 'Saison',
                 'class'        => Season::class,
                 'choice_label' => 'name',
                 'placeholder'  => 'Sélectionner la saison'

@@ -17,6 +17,7 @@ class IngredientType extends AbstractType
     {
         $builder
             ->add('aliment', EntityType::class,[
+                'label'        => 'Aliment',
                 'class'        => Aliment::class,
                 'choice_label' => 'prettyName',
                 'placeholder'  => 'Choose Aliment',
@@ -24,7 +25,9 @@ class IngredientType extends AbstractType
                     'class' => 'tom-select-ingredients',
                 ],
             ])
-            ->add('quantity')
+            ->add('quantity', null, [
+                'label' => 'Quantité'
+            ])
         ;
 
     }
