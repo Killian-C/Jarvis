@@ -20,6 +20,9 @@ class ShiftType extends AbstractType
             ->add('identifier', HiddenType::class, [
                 'label' => false,
             ])
+            ->add('moment', HiddenType::class, [
+                'label' => false,
+            ])
             ->add('dishes', CollectionType::class, [
                 'entry_type'    => DishType::class,
                 'allow_add'     => true,

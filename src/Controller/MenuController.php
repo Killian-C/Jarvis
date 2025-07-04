@@ -71,9 +71,10 @@ class MenuController extends AbstractController
             $shifts = $shiftService->getShiftsByMenuDates($start, $end);
             $seasons = $seasonRepository->findSeasonByDate(new DateTime($start->format('Y-m-d')));
 
-            foreach($shifts as $shiftIdentifier) {
+            foreach($shifts as $shiftData) {
                 $shift = new Shift();
-                $shift->setIdentifier($shiftIdentifier);
+                $shift->setIdentifier($shiftData[Shift::KEY_SHIFT_DAY]);
+                $shift->setMoment($shiftData[Shift::KEY_SHIFT_MOMENT]);
                 $menu->addShift($shift);
             }
             $formShiftStep = $this->createForm(MenuType::class, $menu,$menuTypeOptions);

@@ -12,21 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Shift
 {
-    const SHIFT_IDENTIFIER = [
-        'Lundi midi',
-        'Lundi soir',
-        'Mardi midi',
-        'Mardi soir',
-        'Mercredi midi',
-        'Mercredi soir',
-        'Jeudi midi',
-        'Jeudi soir',
-        'Vendredi midi',
-        'Vendredi soir',
-        'Samedi midi',
-        'Samedi soir',
-        'Dimanche midi',
-        'Dimanche soir',
+    public const MOMENT_LUNCH = 'midi';
+    public const MOMENT_DINER = 'soir';
+    public const KEY_SHIFT_DAY = 0;
+    public const KEY_SHIFT_MOMENT = 1;
+    public const SHIFT_IDENTIFIER = [
+        ['Lundi', self::MOMENT_LUNCH],
+        ['Lundi', self::MOMENT_DINER],
+        ['Mardi', self::MOMENT_LUNCH],
+        ['Mardi', self::MOMENT_DINER],
+        ['Mercredi', self::MOMENT_LUNCH],
+        ['Mercredi', self::MOMENT_DINER],
+        ['Jeudi', self::MOMENT_LUNCH],
+        ['Jeudi', self::MOMENT_DINER],
+        ['Vendredi', self::MOMENT_LUNCH],
+        ['Vendredi', self::MOMENT_DINER],
+        ['Samedi', self::MOMENT_LUNCH],
+        ['Samedi', self::MOMENT_DINER],
+        ['Dimanche', self::MOMENT_LUNCH],
+        ['Dimanche', self::MOMENT_DINER],
     ];
 
     public const DAYS_INDEX_SHIFT_INDENTIFIER = [
@@ -61,6 +65,11 @@ class Shift
      * @ORM\OneToMany(targetEntity=Dish::class, mappedBy="shift", cascade={"persist"})
      */
     private Collection $dishes;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private ?string $moment;
 
     public function __construct()
     {
@@ -122,6 +131,18 @@ class Shift
                 $dish->setShift(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMoment(): ?string
+    {
+        return $this->moment;
+    }
+
+    public function setMoment(string $moment): self
+    {
+        $this->moment = $moment;
 
         return $this;
     }

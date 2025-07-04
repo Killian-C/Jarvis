@@ -52,7 +52,10 @@ class ShiftService
                 break;
             }
             $halfShift = Shift::SHIFT_IDENTIFIER[$i];
-            $shifts[] = sprintf('%s %s', $halfShift, $firstDate->format('d/m'));
+            $shifts[] = [
+                sprintf('%s %s', $halfShift[Shift::KEY_SHIFT_DAY], $firstDate->format('d/m')),
+                $halfShift[Shift::KEY_SHIFT_MOMENT],
+            ];
             if ($i % 2 !== 0) {
                 $firstDate->modify('+1 day');
             }
