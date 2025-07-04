@@ -1,0 +1,34 @@
+.menu-bg {
+  background-color: #e2dff7;
+}
+
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  grid-auto-rows: 1fr;
+  justify-items: stretch;
+  justify-content: center;
+  align-items: stretch;
+
+  .menu-item {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    align-self: stretch;
+    justify-self: stretch;
+    div {
+      width: 100%;
+    }
+  }
+
+  // breakpoints bootstrap
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 100%;
+  }
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+  }
+}
