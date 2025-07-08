@@ -28,9 +28,10 @@ class DishType extends AbstractType
 
         $builder
             ->add('recipe', EntityType::class, [
-                'class' => Recipe::class,
+                'class'        => Recipe::class,
                 'choice_label' => 'title',
-                'placeholder'  => 'Choose Recipe',
+                'label'        => 'Recette',
+                'placeholder'  => 'Choisir une recette',
                 'attr' => [
                     'class' => 'tom-select-recipes',
                 ]

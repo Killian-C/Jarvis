@@ -31,13 +31,17 @@ class ListItemType extends AbstractType
                 'label' => false,
                 'attr'  => [
                     'min'   => 1,
-                    'step'  => 0.1
-                ]
+                    'step'  => 0.1,
+                ],
             ])
             ->add('shopPlace', EntityType::class, [
                 'class'        => ShopPlace::class,
+                'label'        => false,
                 'choice_label' => 'name',
                 'placeholder'  => "Lieu d'achat",
+                'attr'         => [
+                    'class' => 'list-item-shop-place',
+                ]
             ])
         ;
     }

@@ -33,14 +33,17 @@
             <div class="my-4 alert alert-primary">
                 {{ form_row(form_shift_step.startedAt) }}
                 {{ form_row(form_shift_step.finishedAt) }}
+
+                {% if seasons|length > 0 %}
+                    <p class="small font-italic">Saisons :
+                        {% for season in seasons %}
+                            {{ season.name }}{% if loop.index != seasons|length %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+
             </div>
             <div>
-                <p>Saisons :</p>
-                <ul>
-                    {% for season in seasons %}
-                        <li>{{ season.name }}</li>
-                    {% endfor %}
-                </ul>
                 <p>Types de recettes :</p>
                 <select class="pb-4" id="select-recipe-type" name="types[]" multiple autocomplete="off" data-recipe-types="">
                     <option value="">Ajouter un filtre de type</option>
@@ -59,7 +62,7 @@
                     {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
                     <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
                         {% for dish in shift.dishes %}
-                            <li class="dish-form">
+                            <li class="dish-form mb-4">
                                 {{ form_widget(dish) }}
                                 <button
                                     class="async-delete-dish-button"
