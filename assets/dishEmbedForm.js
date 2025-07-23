@@ -1,7 +1,7 @@
 const mainContainer = document.getElementById('shifts-container');
 const asyncSearchUrl = mainContainer.dataset.asyncUrl;
 const dishBlocks = document.getElementsByClassName('dishes-block');
-
+const seasonsQuery = mainContainer.dataset.seasonsQuery;
 const initTomSelect = (selectInput) => {
 
     const selectedValue = selectInput.value;
@@ -18,7 +18,7 @@ const initTomSelect = (selectInput) => {
         items: selectedValue ? [selectedValue] : [],
         sortField: [{field:'$order'},{field:'$score'}],
         load: function(query, callback) {
-            let url = `${asyncSearchUrl}?search=${encodeURIComponent(query)}&inRecipeTypes=${recipeTypesPicked}`;
+            let url = `${asyncSearchUrl}?search=${encodeURIComponent(query)}&inRecipeTypes=${recipeTypesPicked}&forSeasons=${seasonsQuery}`;
             fetch(url)
                 .then(response => {
                     return response.json()

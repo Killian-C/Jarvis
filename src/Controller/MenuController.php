@@ -16,6 +16,7 @@ use App\Service\ShiftService;
 use DateMalformedStringException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ class MenuController extends AbstractController
      * @param RecipeTypeRepository $recipeTypeRepository
      * @return Response
      * @throws DateMalformedStringException
-     * @throws \Exception
+     * @throws Exception
      */
     public function new(
         Request $request,
@@ -70,6 +71,10 @@ class MenuController extends AbstractController
             $end    = $menu->getFinishedAt();
             $shifts = $shiftService->getShiftsByMenuDates($start, $end);
             $seasons = $seasonRepository->findSeasonByDate(new DateTime($start->format('Y-m-d')));
+            $seasonNames = array_map(function ($season) {
+                return $season->getName();
+            }, $seasons);
+            $seasonsQuery = implode(", ", $seasonNames);
 
             foreach($shifts as $shiftData) {
                 $shift = new Shift();
@@ -85,7 +90,8 @@ class MenuController extends AbstractController
                 'recipes'                     => $recipes,
                 'seasons'                     => $seasons,
                 'all_recipe_types'            => $recipeTypeRepository->findAll(),
-                'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS
+                'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS,
+                'seasons_query'               => $seasonsQuery,
             ]);
         }
 
@@ -133,6 +139,10 @@ class MenuController extends AbstractController
     ): Response
     {
         $seasons = $seasonRepository->findSeasonByDate($menu->getStartedAt());
+        $seasonNames = array_map(function ($season) {
+            return $season->getName();
+        }, $seasons);
+        $seasonsQuery = implode(", ", $seasonNames);
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
 
@@ -157,7 +167,8 @@ class MenuController extends AbstractController
             'recipes'                     => $recipes,
             'seasons'                     => $seasons,
             'all_recipe_types'            => $recipeTypeRepository->findAll(),
-            'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS
+            'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS,
+            'seasons_query'               => $seasonsQuery,
         ]);
     }
 
@@ -196,7 +207,7 @@ class MenuController extends AbstractController
         try {
             $entityManager->remove($dish);
             $entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dump($e->getMessage());
             return new JsonResponse(["error" => $e], 500);
         }

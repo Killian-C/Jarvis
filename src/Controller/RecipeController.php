@@ -118,19 +118,16 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/async-get-by-ingredient-or-title", name="async_search")
-     * Example : http://localhost/recipe/async-get-by-ingredient-or-title?search=riz&inRecipeTypes="Plat, Plat trash"
+     * Example : http://localhost/recipe/async-get-by-ingredient-or-title?search=riz&inRecipeTypes=Plat, Plat trash&forSeasons=Été, Toutes saisons
      */
     public function asyncGetRecipesByIngredientOrTitle(Request $request, RecipeRepository $recipeRepository): JsonResponse
     {
         $value = $request->get('search');
         $recipeTypesQuery = $request->get('inRecipeTypes');
-        $recipeTypes = $recipeTypesQuery !== ""
-            ? array_map(static function ($value) {
-                return trim($value);
-            }, explode(',', ($recipeTypesQuery)))
-            : []
-        ;
-        $recipes = $recipeRepository->findByTitleOrIngredientInRecipeTypes($value, $recipeTypes);
+        $recipeTypes = $this->getQueryParams($recipeTypesQuery);
+        $seasonsQuery = $request->get('forSeasons') ?? "";
+        $seasons = $this->getQueryParams($seasonsQuery);
+        $recipes = $recipeRepository->findByTitleOrIngredientByMenuContext($value, $recipeTypes, $seasons);
 
         $data = array_map(static function (Recipe $recipe) {
             $ingredientNames = array_map(static function (Ingredient $ingredient) {
@@ -153,6 +150,20 @@ class RecipeController extends AbstractController
         return new JsonResponse(
             $data, Response::HTTP_OK
         );
+    }
+
+    /**
+     * @param string|null $query
+     * @return array
+     */
+    protected function getQueryParams(?string $query = ""): array
+    {
+        return $query !== ""
+            ? array_map(static function ($value) {
+                return trim($value);
+            }, explode(',', ($query)))
+            : []
+        ;
     }
 }
 

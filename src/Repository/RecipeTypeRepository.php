@@ -18,15 +18,4 @@ class RecipeTypeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, RecipeType::class);
     }
-
-    public function findByNames(array $names)
-    {
-        $qb = $this->createQueryBuilder('rt');
-        $qb
-            ->where($qb->expr()->in('rt.name', ':names'))
-            ->setParameter('names', $names)
-        ;
-
-        return $qb->getQuery()->getResult();
-    }
 }

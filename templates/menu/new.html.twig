@@ -15,7 +15,7 @@
     <h4 class="text-center my-4">
         {% block title_form %}Créer un nouveau menu{% endblock %}
     </h4>
-    <div id="shifts-container" data-async-url="{{ path('recipe_async_search') }}" class="container">
+    <div id="shifts-container" data-async-url="{{ path('recipe_async_search') }}" data-seasons-query="{{ seasons_query ?? "" }}" class="container">
         {% if date_step %}
             {{ form_start(form_date_step) }}
             <div class="my-4 alert alert-primary">
