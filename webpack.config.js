@@ -26,6 +26,11 @@ Encore
     .addEntry('listItemEmbedForm', './assets/listItemEmbedForm.js')
     .addEntry('listItemsIsCheckedAjax', './assets/listItemIsCheckedAjax.js')
 
+    .copyFiles({
+        from: './assets/img',
+        to: 'img/[path][name].[hash:8].[ext]'
+    })
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 

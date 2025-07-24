@@ -13,8 +13,10 @@ button {
   cursor: pointer; /* Rétablit le comportement interactif */
 }
 
-.w-70 {
-  width: 70%;
+@for $i from 1 through 100 {
+  .w-#{$i} {
+    width: $i * 1%;
+  }
 }
 
 .white-space-pre-wrap {

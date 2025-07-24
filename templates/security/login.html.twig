@@ -17,8 +17,8 @@
                 </div>
             {% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-            <div class="d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center w-auto">
+                <img class="w-80" alt="jarvis-welcome" src="{{ asset('build/img/jarvis-purple.svg') }}">
                 <div class="pb-4">
                     <label for="inputEmail">Email</label>
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -32,7 +32,7 @@
                        value="{{ csrf_token('authenticate') }}"
                 >
                 <button class="btn btn-lg btn-primary" type="submit">
-                    Se connecter
+                    Connexion
                 </button>
             </div>
         </form>
