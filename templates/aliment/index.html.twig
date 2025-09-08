@@ -2,6 +2,11 @@
 
 {% block title %}Liste des aliments{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('alimentTableSearchFilter') }}
+{% endblock %}
+
 {% block body %}
     <h3 class="text-primary-blue text-center my-4">Liste des aliments</h3>
     <div class="text-center my-2">
@@ -10,17 +15,22 @@
         <a class="btn btn-primary text-dark my-2" href="{{ path('unit_index') }}"><i class="fas fa-ruler"></i> Unités</a>
         <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux d'achats</a>
     </div>
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Aliment</th> <th>Catégories</th> <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div id="aliments">
+        <label>
+            <input type="text" class="search" placeholder="Rechercher aliment..." />
+        </label>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Aliment</th> <th>Catégories</th> <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="list">
             {% for aliment in aliments %}
                 <tr>
-                    <td>{{ aliment.prettyName }}</td>
-                    <td>{{ aliment.category.name }}</td>
+                    <td class="name">{{ aliment.prettyName }}</td>
+                    <td class="category">{{ aliment.category.name }}</td>
                     <td class="d-flex flex-row">
                         <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post" class="ml-3">
                             <button class="btn btn-tertiary text-tertiary-dark"><i class="fas fa-pen"></i></button>
@@ -31,6 +41,7 @@
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

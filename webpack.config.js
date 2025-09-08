@@ -25,6 +25,7 @@ Encore
     .addEntry('dishEmbedForm', './assets/dishEmbedForm.js')
     .addEntry('listItemEmbedForm', './assets/listItemEmbedForm.js')
     .addEntry('listItemsIsCheckedAjax', './assets/listItemIsCheckedAjax.js')
+    .addEntry('alimentTableSearchFilter', './assets/alimentTableSearchFilter.js')
 
     .copyFiles({
         from: './assets/img',
