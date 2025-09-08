@@ -11,10 +11,10 @@
                 <li class="list-group-item d-flex justify-content-center align-items-center">
                         {{ category.name }}
                         <form action="{{ path('category_edit', {'id': category.id}) }}" method="post" class="ml-3">
-                                <button class="btn btn-secondary">📝</button>
+                                <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
                         </form>
                         <form action="{{ path('category_delete', {'id': category.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">🗑</button>
+                            <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
                         </form>
                 </li>
             {% endfor %}

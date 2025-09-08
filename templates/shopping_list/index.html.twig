@@ -31,7 +31,7 @@
 
         {% block delete_all_btn %}
             <form action="{{ path('shopping_list_clean_shopping_list', {'id': shopping_list.id}) }}" method="post" class="mx-2">
-                <button class="btn btn-primary">🗑 Suppr tout</button>
+                <button class="btn btn-primary"><i class="fas fa-trash"></i> Suppr tout</button>
             </form>
         {% endblock %}
 

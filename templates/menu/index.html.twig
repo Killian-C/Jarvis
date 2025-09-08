@@ -17,10 +17,10 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-end">
                         <form action="{{ path('menu_edit', {'id': menu.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">📝</button>
+                            <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
                         </form>
                         <form action="{{ path('menu_delete', {'id': menu.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">🗑</button>
+                            <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
                         </form>
                     </div>
                 </a>

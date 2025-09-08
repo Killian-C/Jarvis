@@ -17,6 +17,19 @@ button {
   .w-#{$i} {
     width: $i * 1%;
   }
+  .h-#{$i} {
+    height: $i * 1%;
+  }
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-dark);
+}
+
+.btn-tertiary {
+  background-color: var(--tertiary);
+  color: var(--secondary-dark);
 }
 
 .white-space-pre-wrap {

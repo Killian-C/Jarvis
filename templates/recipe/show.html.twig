@@ -4,17 +4,20 @@
 
 {% block body %}
     <a class="p-2" href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
-    <h4 class="text-center mt-4">{{ recipe.title }}</h4>
-    <p class="text-center text-primary mb-4">(pour {{ people_count }} personne)</p>
-    {% if recipe.season %}
-        <p class="text-center text-primary mb-4">Saison : {{ recipe.season.name }}</p>
-    {% endif %}
+    <h4 class="text-dark text-center mt-4">{{ recipe.title }}</h4>
+    <p class="text-center text-primary mb-4">
+        {% if recipe.season %}
+            <i class="fas fa-sun"></i> {{ recipe.season.name }} /
+        {% endif %}
+        (pour {{ people_count }} personne)
+    </p>
     <form action="{{ path('recipe_edit', {'id': recipe.id}) }}" method="post" class="text-center">
-        <button class="btn btn-primary">Mettre à jour cette recette</button>
+{#        <button class="btn btn-primary">Mettre à jour cette recette</button>#}
+        <button class="btn btn-secondary"><i class="fas fa-pen"></i> Éditer</button>
     </form>
     <div class="container">
         <div class="row justify-content-center m-0">
-            <div class="col-12 col-md-5 recipe-ingredient-box alert alert-secondary my-3 mx-2">
+            <div class="col-12 col-md-5 recipe-ingredient-box alert alert-primary my-3 mx-2">
                 <h5 class="text-center mb-3"><i class="fas fa-carrot mr-2"></i> Ingrédients</h5>
                 <ul>
                     {% for ingredient in recipe.ingredients %}
@@ -23,7 +26,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-12 col-md-5 recipe-description-box alert alert-secondary my-3 mx-2">
+            <div class="col-12 col-md-5 recipe-description-box alert alert-primary my-3 mx-2">
                 <h5 class="text-center mb-3"><i class="fas fa-list-ol mr-2"></i> Déroulé de la recette</h5>
                 <p class="white-space-pre-wrap">{{ recipe.description }}</p>
             </div>

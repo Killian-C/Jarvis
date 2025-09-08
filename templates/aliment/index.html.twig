@@ -3,12 +3,12 @@
 {% block title %}Liste des aliments{% endblock %}
 
 {% block body %}
-    <h3 class="text-center my-4">Liste des aliments</h3>
-    <div class="text-center">
-        <a class="btn btn-primary my-4" href="{{ path('aliment_new') }}">Ajouter un nouvel aliment</a>
-        <a class="btn btn-primary my-4" href="{{ path('category_index') }}">Gérer les catégories d'aliment</a>
-        <a class="btn btn-primary my-4" href="{{ path('unit_index') }}">Gérer les unités de mesure</a>
-        <a class="btn btn-primary my-4" href="{{ path('shopplace_index') }}">Gérer les lieux d'achats</a>
+    <h3 class="text-primary-blue text-center my-4">Liste des aliments</h3>
+    <div class="text-center my-2">
+        <a class="btn btn-primary text-dark my-2" href="{{ path('aliment_new') }}"><i class="fas fa-plus"></i>  Aliment</a>
+        <a class="btn btn-primary text-dark my-2" href="{{ path('category_index') }}"><i class="fas fa-tags"></i> Catégories</a>
+        <a class="btn btn-primary text-dark my-2" href="{{ path('unit_index') }}"><i class="fas fa-ruler"></i> Unités</a>
+        <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux d'achats</a>
     </div>
     <div class="container m-0 p-0 mx-auto">
         <div class="row m-0 p-0 justify-content-center text-center">
@@ -22,10 +22,10 @@
                                     - {{ aliment.prettyName ?: aliment.name ~ ' (' ~ aliment.unit.name ~ ')' }}
                                 </p>
                                 <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post" class="ml-3">
-                                    <button class="btn btn-secondary">📝</button>
+                                    <button class="btn btn-tertiary text-tertiary-dark"><i class="fas fa-pen"></i></button>
                                 </form>
                                 <form action="{{ path('aliment_delete', {'id': aliment.id}) }}" method="post" class="ml-3">
-                                    <button class="btn btn-secondary">🗑</button>
+                                    <button class="btn btn-secondary text-secondary-dark"><i class="fas fa-trash"></i></button>
                                 </form>
                             </div>
                         {% endfor %}

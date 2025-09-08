@@ -1,29 +1,43 @@
 .home-page {
-  background: linear-gradient(0.25turn, var(--primary), var(--secondary));
+  //background: linear-gradient(0.25turn, var(--primary), var(--secondary));
+  background: var(--primary);
   height: 100vh;
   color: white;
 }
 
 .home-page h1 {
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .home-page .btn {
   border: 1px transparent solid;
 }
 
-.home-page .btn-primary {
-  border: 1px transparent solid;
-  background: var(--secondary);
-  font-weight: 700;
-  font-size: 1.5rem;
-}
+//.home-page .btn-primary {
+//  border: 1px transparent solid;
+//  background: var(--secondary);
+//  font-size: 1rem;
+//}
+//
+//.home-page .btn-primary:hover {
+//  border: 1px transparent solid;
+//  background: var(--secondary);
+//  font-weight: 700;
+//  font-size: 1rem;
+//}
 
-.home-page .btn-primary:hover {
-  border: 1px transparent solid;
-  background: var(--primary);
-  font-weight: 700;
-  font-size: 1.5rem;
+.main-menu-cta-box {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  .main-cta {
+    margin-left: 1.5em;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    .main-cta {
+      margin-top: 1.5em;
+    }
+  }
 }
-

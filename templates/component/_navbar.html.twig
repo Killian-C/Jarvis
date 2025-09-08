@@ -1,39 +1,41 @@
 <nav class="navbar navbar-expand-lg text-light bg-primary mb-3">
     <a class="navbar-brand" href="{{ path('default_index') }}"><h4 class="text-light">On mange quoi c'soir ?</h4></a>
-    <button class="navbar-toggler btn-secondary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler btn-primary-blue" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-primary py-1"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link text-primary btn btn-secondary p-2 m-3" href="{{ path('aliment_index') }}">
-                        <i class="fas fa-pepper-hot mr-1"></i>
-                        Aliments
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link text-primary btn btn-secondary p-2 m-3" href="{{ path('recipe_index') }}">
-                        <i class="fas fa-book mr-1"></i>
-                        Recettes
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary btn btn-secondary p-2 m-3" href="{{ path('menu_index') }}">
-                        <i class="fas fa-table mr-1"></i>
-                        Menus
-                    </a>
-                </li>
+            <ul class="navbar-nav mr-0 align-items-center justify-content-center">
                 <li>
-                    <a class="nav-link btn btn-light text-primary font-weight-bold p-3 m-3" href="{{ path('menu_new') }}">
+                    <a class="nav-link btn btn-tertiary text-secondary-dark font-weight-bold p-3 m-3" href="{{ path('menu_new') }}">
                         <i class="fas fa-scroll mr-2"></i>
                         Créer un menu
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link btn btn-light text-primary font-weight-bold p-3 m-3" href="{{ path('shopping_list_index') }}">
+                    <a class="nav-link btn btn-tertiary text-secondary-dark font-weight-bold p-3 m-3" href="{{ path('shopping_list_index') }}">
                         <i class="fas fa-tasks mr-2"></i>
                         Liste de courses
+                    </a>
+                </li>
+            </ul>
+            <ul class="d-flex flex-row list-unstyled align-items-center justify-content-center mb-0">
+                <li class="nav-item">
+                    <a class="nav-link text-secondary-dark btn btn-secondary p-2 m-3" href="{{ path('aliment_index') }}">
+                        <i class="fas fa-pepper-hot mr-1"></i>
+                        Aliments
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-secondary-dark btn btn-secondary p-2 m-3" href="{{ path('recipe_index') }}">
+                        <i class="fas fa-book mr-1"></i>
+                        Recettes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary-dark btn btn-secondary p-2 m-3" href="{{ path('menu_index') }}">
+                        <i class="fas fa-table mr-1"></i>
+                        Menus
                     </a>
                 </li>
             </ul>

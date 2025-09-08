@@ -14,10 +14,10 @@
                     <h6 class="text-center">{{ season.name }} - (du {{ season.startDate|format_datetime(locale='fr',pattern="dd MMMM")  }} au {{ season.endDate|format_datetime(locale='fr',pattern="dd MMMM")  }})</h6>
                         </p>
                         <form action="{{ path('season_edit', {'id': season.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">📝</button>
+                            <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
                         </form>
                         <form action="{{ path('season_delete', {'id': season.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary">🗑</button>
+                            <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
                         </form>
                     </div>
             {% endfor %}

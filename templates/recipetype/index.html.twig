@@ -13,10 +13,10 @@
                 <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
                     <h6 class="text-center">{{ recipetype.name }}</h6>
                     <form action="{{ path('recipetype_edit', {'id': recipetype.id}) }}" method="post" class="ml-3">
-                        <button class="btn btn-secondary">📝</button>
+                        <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
                     </form>
                     <form action="{{ path('recipetype_delete', {'id': recipetype.id}) }}" method="post" class="ml-3">
-                        <button class="btn btn-secondary">🗑</button>
+                        <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
                     </form>
                 </div>
             {% endfor %}
