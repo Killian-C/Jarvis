@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Aliment;
 use App\Form\AlimentType;
 use App\Repository\AlimentRepository;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,11 +21,11 @@ class AlimentController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(AlimentRepository $alimentRepository): Response
     {
-        $categories = $categoryRepository->findBy([], [ 'name' => 'ASC' ]);
+        $aliments = $alimentRepository->findAll();
         return $this->render('aliment/index.html.twig', [
-            'categories' => $categories,
+            'aliments' => $aliments,
         ]);
     }
 
