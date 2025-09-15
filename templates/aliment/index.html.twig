@@ -16,32 +16,44 @@
         <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux d'achats</a>
     </div>
     <div id="aliments">
-        <label>
-            <input type="text" class="search" placeholder="Rechercher aliment..." />
-        </label>
+        <div class="d-flex flex-column flex-sm-row m-2">
+            <label>
+                <input type="text" class="form-control search" placeholder="Rechercher aliment..." />
+            </label>
+            <select class="form-control w-auto ml-sm-2" id="aliment-category-filters">
+                <option value="">--Aucun filtre--</option>
+                {% for alimentCategory in alimentCategories %}
+                    <option value="{{ alimentCategory.name }}">{{ alimentCategory.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <table class="table table-striped table-hover">
-            <thead>
+        <div class="m-2">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
                 <tr>
-                    <th>Aliment</th> <th>Catégories</th> <th>Actions</th>
+                    <th>Aliment</th> <th>Catégories</th> <th class="text-center">Actions</th>
                 </tr>
-            </thead>
-            <tbody class="list">
-            {% for aliment in aliments %}
-                <tr>
-                    <td class="name">{{ aliment.prettyName }}</td>
-                    <td class="category">{{ aliment.category.name }}</td>
-                    <td class="d-flex flex-row">
-                        <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-tertiary text-tertiary-dark"><i class="fas fa-pen"></i></button>
-                        </form>
-                        <form action="{{ path('aliment_delete', {'id': aliment.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary text-secondary-dark"><i class="fas fa-trash"></i></button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="list">
+                {% for aliment in aliments %}
+                    <tr>
+                        <td class="name">{{ aliment.prettyName }}</td>
+                        <td class="category">{{ aliment.category.name }}</td>
+                        <td>
+                            <div class="d-flex flex-row align-items-center justify-content-center">
+                                <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post">
+                                    <button class="btn btn-tertiary text-tertiary-dark"><i class="fas fa-pen"></i></button>
+                                </form>
+                                <form action="{{ path('aliment_delete', {'id': aliment.id}) }}" method="post" class="ml-3">
+                                    <button class="btn btn-secondary text-secondary-dark"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
