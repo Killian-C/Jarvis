@@ -60,7 +60,7 @@ class UnitController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="unit_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="unit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Unit $unit): Response
     {
@@ -80,15 +80,13 @@ class UnitController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="unit_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="unit_delete", methods={"POST"})
      */
-    public function delete(Request $request, Unit $unit): Response
+    public function delete(Unit $unit): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$unit->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($unit);
-            $entityManager->flush();
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($unit);
+        $entityManager->flush();
 
         return $this->redirectToRoute('unit_index');
     }

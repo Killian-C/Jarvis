@@ -9,45 +9,45 @@
 {% endblock %}
 
 {% block body %}
-    <h3 class="text-primary-blue text-center my-4">Liste des aliments</h3>
-    <div class="text-center my-2">
-        <a class="btn btn-primary text-dark my-2" href="{{ path('aliment_new') }}"><i class="fas fa-plus"></i>  Aliment</a>
-        <a class="btn btn-primary text-dark my-2" href="{{ path('category_index') }}"><i class="fas fa-tags"></i> Catégories</a>
-        <a class="btn btn-primary text-dark my-2" href="{{ path('unit_index') }}"><i class="fas fa-ruler"></i> Unités</a>
-        <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux d'achats</a>
+<h3 class="text-primary-blue text-center my-4">Liste des aliments</h3>
+<div class="text-center my-2">
+    <a class="btn btn-primary text-dark my-2" href="{{ path('aliment_new') }}"><i class="fas fa-plus"></i>  Aliment</a>
+    <a class="btn btn-primary text-dark my-2" href="{{ path('category_index') }}"><i class="fas fa-tags"></i> Catégories</a>
+    <a class="btn btn-primary text-dark my-2" href="{{ path('unit_index') }}"><i class="fas fa-ruler"></i> Unités</a>
+    <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux d'achats</a>
+</div>
+<div id="aliments">
+    <div class="d-flex flex-column flex-sm-row m-2">
+        <label>
+            <input type="text" class="form-control search" placeholder="Rechercher aliment..." />
+        </label>
+        <select class="form-control w-auto ml-sm-2" id="aliment-category-filters">
+            <option value="">-- Aucun filtre --</option>
+            {% for alimentCategory in alimentCategories %}
+                <option value="{{ alimentCategory.name }}">{{ alimentCategory.name }}</option>
+            {% endfor %}
+        </select>
     </div>
-    <div id="aliments">
-        <div class="d-flex flex-column flex-sm-row m-2">
-            <label>
-                <input type="text" class="form-control search" placeholder="Rechercher aliment..." />
-            </label>
-            <select class="form-control w-auto ml-sm-2" id="aliment-category-filters">
-                <option value="">-- Aucun filtre --</option>
-                {% for alimentCategory in alimentCategories %}
-                    <option value="{{ alimentCategory.name }}">{{ alimentCategory.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
 
-        <div class="m-2">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
+    <div class="m-2">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>Aliment</th> <th>Catégories</th> <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="list">
+            {% for aliment in aliments %}
                 <tr>
-                    <th>Aliment</th> <th>Catégories</th> <th class="text-center">Actions</th>
+                    <td class="name">{{ aliment.prettyName }}</td>
+                    <td class="category">{{ aliment.category.name }}</td>
+                    <td>
+                        {{ table_actions(path('aliment_edit', {'id': aliment.id}), path('aliment_delete', {'id': aliment.id})) }}
+                    </td>
                 </tr>
-                </thead>
-                <tbody class="list">
-                {% for aliment in aliments %}
-                    <tr>
-                        <td class="name">{{ aliment.prettyName }}</td>
-                        <td class="category">{{ aliment.category.name }}</td>
-                        <td>
-                            {{ table_actions(path('aliment_edit', {'id': aliment.id}), path('aliment_delete', {'id': aliment.id})) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
 {% endblock %}

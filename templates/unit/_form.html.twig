@@ -1,4 +1,6 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">Enregistrer unité de mesure</button>
+    <div class="d-flex flex-column align-items-center justify-content-between">
+        {{ form_row(form.name) }}
+        <button class="mt-2 btn btn-tertiary">Enregistrer</button>
+    </div>
 {{ form_end(form) }}
