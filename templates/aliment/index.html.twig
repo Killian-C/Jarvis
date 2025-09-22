@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
 
 {% block title %}Liste des aliments{% endblock %}
 
@@ -21,7 +22,7 @@
                 <input type="text" class="form-control search" placeholder="Rechercher aliment..." />
             </label>
             <select class="form-control w-auto ml-sm-2" id="aliment-category-filters">
-                <option value="">--Aucun filtre--</option>
+                <option value="">-- Aucun filtre --</option>
                 {% for alimentCategory in alimentCategories %}
                     <option value="{{ alimentCategory.name }}">{{ alimentCategory.name }}</option>
                 {% endfor %}
@@ -41,14 +42,7 @@
                         <td class="name">{{ aliment.prettyName }}</td>
                         <td class="category">{{ aliment.category.name }}</td>
                         <td>
-                            <div class="d-flex flex-row align-items-center justify-content-center">
-                                <form action="{{ path('aliment_edit', {'id': aliment.id}) }}" method="post">
-                                    <button class="btn btn-tertiary text-tertiary-dark"><i class="fas fa-pen"></i></button>
-                                </form>
-                                <form action="{{ path('aliment_delete', {'id': aliment.id}) }}" method="post" class="ml-3">
-                                    <button class="btn btn-secondary text-secondary-dark"><i class="fas fa-trash"></i></button>
-                                </form>
-                            </div>
+                            {{ table_actions(path('aliment_edit', {'id': aliment.id}), path('aliment_delete', {'id': aliment.id})) }}
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,0 +1,11 @@
+
+{% macro table_actions(editAction, deleteAction) %}
+    <div class="d-flex flex-row align-items-center justify-content-center">
+        <form action="{{ editAction }}" method="post">
+            <button class="btn btn-tertiary text-tertiary-dark"><i class="fas fa-pen"></i></button>
+        </form>
+        <form action="{{ deleteAction }}" method="post" class="ml-3">
+            <button class="btn btn-secondary text-secondary-dark"><i class="fas fa-trash"></i></button>
+        </form>
+    </div>
+{% endmacro %}
