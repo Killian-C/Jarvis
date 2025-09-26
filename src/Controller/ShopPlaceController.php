@@ -68,7 +68,7 @@ class ShopPlaceController extends AbstractController
         }
 
 
-        return $this->render('shopplace/new.html.twig', [
+        return $this->render('shopplace/edit.html.twig', [
             'shopplace' => $shopPlace,
             'form'   => $shopPlaceType->createView()
         ]);

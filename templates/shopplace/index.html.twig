@@ -1,25 +1,35 @@
 {% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
 
 {% block title %}Liste des lieux d'achat{% endblock %}
 
 {% block body %}
-    <h3 class="text-center my-4">Liste des lieux d'achat</h3>
+    <a class="p-3" href="{{ path('aliment_index') }}">Retour à la liste des aliments</a>
+    <h3 class="text-center my-4 text-primary-blue">Liste des lieux d'achat</h3>
     <div class="text-center">
-        <a class="btn btn-primary my-4" href="{{ path('shopplace_new') }}">Ajouter un nouveau lieu d'achat</a>
+        <a class="btn btn-primary-blue" href="{{ path('shopplace_new') }}">Ajouter un nouveau lieu d'achat</a>
     </div>
-    <div class="container m-0 p-0 mx-auto">
-        <div class="row m-0 p-0 justify-content-center text-center">
-            {% for shopplace in shopplaces %}
-                <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
-                    <h6 class="text-center">{{ shopplace.name }}</h6>
-                    <form action="{{ path('shopplace_edit', {'id': shopplace.id}) }}" method="post" class="ml-3">
-                        <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
-                    </form>
-                    <form action="{{ path('shopplace_delete', {'id': shopplace.id}) }}" method="post" class="ml-3">
-                        <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
-                    </form>
-                </div>
-            {% endfor %}
-        </div>
+    <div class="container mt-3">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>Nom</th> <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for shopplace in shopplaces %}
+                    <tr>
+                        <td>{{ shopplace.name }}</td>
+                        <td>
+                            {{ table_actions( path('shopplace_edit', {'id': shopplace.id}), path('shopplace_delete', {'id': shopplace.id})) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Pas de lieux d'achats enregistrés</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
     </div>
 {% endblock %}
