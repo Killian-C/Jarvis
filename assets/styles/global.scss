@@ -39,3 +39,7 @@ button {
 .vh-80 {
   height: 80vh;
 }
+
+.table-blue.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgb(154, 200, 235, 0.2);
+}

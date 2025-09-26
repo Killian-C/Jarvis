@@ -25,6 +25,12 @@ class Recipe
         self::LONG_LABEL    => self::LONG,
     ];
 
+    public const RECIPE_DURATION_TEXT = [
+        self::FAST    => 'Rapide',
+        self::AVERAGE => 'Normal',
+        self::LONG    => 'Long',
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
