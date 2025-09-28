@@ -48,12 +48,14 @@ addIngredientButton.addEventListener('click', (e) => {
     index++;
 
     let listedForm = document.createElement('li');
+    listedForm.classList.add('border', 'p-4', 'li-style-none');
     const suffix = 'ingredient_' + index;
     const formId = 'recipe_ingredients_' + suffix;
 
     listedForm.innerHTML = ingredientForm.replace(regex, suffix);
 
     const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn', 'btn-secondary');
     deleteBtn.innerHTML  = '<i class="fas fa-trash"></i>'
     deleteBtn.addEventListener('click', (e) => {
         e.preventDefault();

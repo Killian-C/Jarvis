@@ -7,6 +7,7 @@ use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\AlimentRepository;
+use App\Repository\RecipeTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,16 @@ class RecipeController extends AbstractController
     /**
      * @Route("/", name="index")
      * @param RecipeRepository $recipeRepository
+     * @param RecipeTypeRepository $recipeTypeRepository
      * @return Response
      */
-    public function index(RecipeRepository $recipeRepository): Response
+    public function index(RecipeRepository $recipeRepository, RecipeTypeRepository $recipeTypeRepository): Response
     {
-        $recipes = $recipeRepository->findBy([], ['title' => 'ASC']);
+        $recipes     = $recipeRepository->findBy([], ['title' => 'ASC']);
+        $recipeTypes = $recipeTypeRepository->findBy([], ['name' => 'ASC']);
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $recipes,
+            'recipes'     => $recipes,
+            'recipe_types' => $recipeTypes
         ]);
     }
     

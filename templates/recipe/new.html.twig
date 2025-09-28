@@ -7,12 +7,13 @@
 {% endblock %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-    <a href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
-    <h4 class="text-center">
-        {% block title_form %}Ajout d'une nouvelle recette{% endblock %}
-    </h4>
-    <h6 class="text-center">Toutes les recettes doivent être écrites pour 1 personne</h6>
     <div class="container">
+        <a href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
+        <h4 class="text-center text-primary-blue mt-2">
+            {% block title_form %}Ajout d'une recette{% endblock %}
+        </h4>
+        <p class="font-weight-bold text-center small text-secondary-dark">Toutes les recettes doivent être écrites pour 1 personne</p>
+
         {{ form_start(form) }}
         <div class="form-box">
             {{ form_row(form.title) }}
@@ -27,10 +28,10 @@
                     </li>
                 {% endfor %}
             </ul>
-            <button id="add-ingredient" type="button" class="add_item_link btn btn-secondary" data-collection-holder-class="ingredients">Ajouter un ingrédient</button>
+            <button id="add-ingredient" type="button" class="add_item_link btn btn-sm btn-outline-primary-blue" data-collection-holder-class="ingredients">Ajouter ingrédient</button>
         </div>
         <div class="text-center my-5">
-            <input class="btn btn-primary p-3" type="submit" value="{% block text_button %}Ajouter{% endblock %}">
+            <input class="btn btn-tertiary p-3" type="submit" value="{% block text_button %}Ajouter{% endblock %}">
         </div>
         {{ form_end(form) }}
     </div>

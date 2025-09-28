@@ -2,6 +2,10 @@
 
 {% block title %}Liste des recettes{% endblock %}
 {% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('recipeTableSearchFilter') }}
+{% endblock %}
 
 {% block body %}
     <h3 class="text-primary-blue text-center my-4">Liste des recettes</h3>
@@ -10,7 +14,18 @@
         <a class="my-2 btn btn-primary text-dark" href="{{ path('recipetype_index') }}"><i class="fas fa-tag"></i> Types de recette</a>
         <a class="my-2 btn btn-primary text-dark" href="{{ path('season_index') }}"><i class="fas fa-cloud-sun"></i> Saisons</a>
     </div>
-    <div class="container mt-4">
+    <div id="recipes" class="container mt-4">
+        <div class="d-flex flex-column flex-sm-row m-2">
+            <label>
+                <input type="text" class="form-control search" placeholder="Rechercher recette..." />
+            </label>
+            <select class="form-control w-auto ml-sm-2" id="recipe-type-filters">
+                <option value="">-- Aucun filtre --</option>
+                {% for recipeType in recipe_types %}
+                    <option value="{{ recipeType.name }}">{{ recipeType.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
         <table class="table table-blue table-striped table-hover table-bordered">
             <thead>
             <tr>
