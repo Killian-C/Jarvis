@@ -20,7 +20,7 @@ class IngredientType extends AbstractType
                 'label'        => 'Aliment',
                 'class'        => Aliment::class,
                 'choice_label' => 'prettyName',
-                'placeholder'  => 'Choose Aliment',
+                'placeholder'  => 'Taper un nom d\'aliment',
                 'attr' => [
                     'class' => 'tom-select-ingredients',
                 ],

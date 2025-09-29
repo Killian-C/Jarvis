@@ -69,7 +69,7 @@ class RecipeTypeController extends AbstractController
         }
 
 
-        return $this->render('recipetype/new.html.twig', [
+        return $this->render('recipetype/edit.html.twig', [
             'recipetype' => $recipeType,
             'form'   => $recipeTypeType->createView()
         ]);

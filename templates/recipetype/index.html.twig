@@ -1,25 +1,31 @@
 {% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
 
 {% block title %}Liste des types de recette{% endblock %}
 
 {% block body %}
-    <h3 class="text-center my-4">Liste des types de recette</h3>
-    <div class="text-center">
-        <a class="btn btn-primary my-4" href="{{ path('recipetype_new') }}">Ajouter un nouveau type de recette</a>
-    </div>
-    <div class="container m-0 p-0 mx-auto">
-        <div class="row m-0 p-0 justify-content-center text-center">
-            {% for recipetype in recipetypes %}
-                <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
-                    <h6 class="text-center">{{ recipetype.name }}</h6>
-                    <form action="{{ path('recipetype_edit', {'id': recipetype.id}) }}" method="post" class="ml-3">
-                        <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
-                    </form>
-                    <form action="{{ path('recipetype_delete', {'id': recipetype.id}) }}" method="post" class="ml-3">
-                        <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
-                    </form>
-                </div>
-            {% endfor %}
+    <a class="p-3" href="{{ path('recipe_index') }}">Retour aux recettes</a>
+    <div class="container">
+        <h4 class="text-primary-blue text-center my-4">Liste des types de recette</h4>
+        <div class="text-center">
+            <a class="btn btn-primary-blue" href="{{ path('recipetype_new') }}"><i class="fas fa-plus"></i> Type de recette</a>
         </div>
+        <table class="table table-striped table-hover table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>Type de recette</th> <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="list">
+            {% for recipetype in recipetypes %}
+                <tr>
+                    <td class="name">{{ recipetype.name }}</td>
+                    <td>
+                        {{ table_actions(path('recipetype_edit', {'id': recipetype.id}), path('recipetype_delete', {'id': recipetype.id})) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

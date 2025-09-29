@@ -48,7 +48,7 @@ addIngredientButton.addEventListener('click', (e) => {
     index++;
 
     let listedForm = document.createElement('li');
-    listedForm.classList.add('border', 'p-4', 'li-style-none');
+    listedForm.classList.add('recipe-new-ingredients-card');
     const suffix = 'ingredient_' + index;
     const formId = 'recipe_ingredients_' + suffix;
 

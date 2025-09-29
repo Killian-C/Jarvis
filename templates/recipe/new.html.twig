@@ -21,9 +21,10 @@
             {{ form_row(form.duration) }}
             {{ form_row(form.season) }}
             {{ form_row(form.description) }}
+            <p class="ingredients-list">Liste des ingrédients :</p>
             <ul id="ingredients-container" data-async-ingredients-url="{{ path('aliment_async_search') }}"class="ingredients" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
                 {% for ingredient in form.ingredients %}
-                    <li>
+                    <li class="recipe-new-ingredients-card">
                         {{ form_widget(ingredient) }}
                     </li>
                 {% endfor %}

@@ -3,14 +3,14 @@
 {% block title %}Créer un type de recette{% endblock %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-    <a class="p-3" href="{{ path('recipetype_index') }}">Retour au type de recette</a>
-    <h3 class="text-center my-4">
-        {% block title_form %}Ajouter un type de recette{% endblock %}
-    </h3>
+    <a class="p-3" href="{{ path('recipetype_index') }}">Retour aux types de recette</a>
     <div class="container">
+        <h4 class="text-center m-4 text-primary-blue">
+            {% block title_form %}Ajouter un type de recette{% endblock %}
+        </h4>
         {{ form_start(form) }}
         {{ form_row(form.name) }}
-        <div class="text-center"><input class="btn btn-primary" type="submit" value="{% block text_button %}Ajouter{% endblock %}"></div>
+        <div class="text-center"><input class="btn btn-tertiary" type="submit" value="{% block text_button %}Ajouter{% endblock %}"></div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

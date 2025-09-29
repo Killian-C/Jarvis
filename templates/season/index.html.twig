@@ -1,26 +1,34 @@
 {% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
 
 {% block title %}Liste des saisons{% endblock %}
 
 {% block body %}
-    <h3 class="text-center my-4">Liste des saisons</h3>
-    <div class="text-center">
-        <a class="btn btn-primary my-4" href="{{ path('season_new') }}">Ajouter une nouvelle saison</a>
-    </div>
-    <div class="container m-0 p-0 mx-auto">
-        <div class="row m-0 p-0 justify-content-center text-center">
-            {% for season in seasons %}
-                <div class="col-12 col-md-5 border rounded-lg m-2 p-2 d-flex flex-column">
-                    <h6 class="text-center">{{ season.name }} - (du {{ season.startDate|format_datetime(locale='fr',pattern="dd MMMM")  }} au {{ season.endDate|format_datetime(locale='fr',pattern="dd MMMM")  }})</h6>
-                        </p>
-                        <form action="{{ path('season_edit', {'id': season.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
-                        </form>
-                        <form action="{{ path('season_delete', {'id': season.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
-                        </form>
-                    </div>
-            {% endfor %}
+    <a class="p-3" href="{{ path('recipe_index') }}">Retour aux recettes</a>
+    <div class="container">
+        <h4 class="text-primary-blue text-center my-4">Liste des saisons</h4>
+        <div class="text-center">
+            <a class="btn btn-primary-blue" href="{{ path('season_new') }}"><i class="fas fa-plus"></i> Saison</a>
         </div>
+        <table class="table table-striped table-hover table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>Saisons</th> <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="list">
+            {% for season in seasons %}
+                <tr>
+                    <td class="name">
+                        {{ season.name }}<br>
+                        <span class="small">(du {{ season.startDate|format_datetime(locale='fr',pattern="dd MMMM")  }} au {{ season.endDate|format_datetime(locale='fr',pattern="dd MMMM")  }})</span>
+                    </td>
+                    <td>
+                        {{ table_actions(path('season_edit', {'id': season.id}), path('season_delete', {'id': season.id})) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
