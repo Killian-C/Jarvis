@@ -1,30 +1,52 @@
 {% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('accordionMenu') }}
+{% endblock %}
 
 {% block title %}Liste des menus{% endblock %}
 
 {% block body %}
-    <h4 class="text-center">Liste des menus</h4>
+    <h4 class="text-center text-primary-blue">Liste des menus</h4>
     <div class="text-center">
-        <a class="my-4 btn btn-primary" href="{{ path('menu_new') }}">Créer un nouveau menu</a>
+        <a class="my-4 btn btn-primary-blue" href="{{ path('menu_new') }}"><i class="fa fa-plus"></i> Menu</a>
     </div>
     <div class="container">
-        <div class="row justify-content-center">
-            {% for menu in menus %}
-                <a class="col-11 alert alert-primary d-flex align-items-center justify-content-center" href="{{ path('menu_show', {'id': menu.id}) }}">
-                    <div>
-                        <i class="fas fa-table"></i>
-                        Menu n°{{ menu.id }} <br> du {{ menu.startedAt|date("d/m/Y") }} <br> au {{ menu.finishedAt|date("d/m/Y") }}
+        <div class="justify-content-center">
+            {% for month_year, menus in month_year_menus %}
+                <div id="accordion{{ month_year|replace({' ': '_'}) }}">
+                    <div class="accordion-menu alert alert-info d-flex justify-content-between"
+                         data-toggle="collapse"
+                         data-target="#collapse{{ month_year|replace({' ': '_'}) }}"
+                         aria-expanded="true"
+                         aria-controls="collapse{{ month_year|replace({' ': '_'}) }}"
+                    >
+                        <div>{{ month_year|capitalize }}</div>
+                        <div class="accordion-menu-arrow {{ loop.index == 1 ? 'active-arrow' : '' }}"><i class="fas fa-sort-down"></i></div>
                     </div>
-                    <div class="d-flex align-items-center justify-content-end">
-                        <form action="{{ path('menu_edit', {'id': menu.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary"><i class="fas fa-pen"></i></button>
-                        </form>
-                        <form action="{{ path('menu_delete', {'id': menu.id}) }}" method="post" class="ml-3">
-                            <button class="btn btn-secondary"><i class="fas fa-trash"></i></button>
-                        </form>
+
+                    <div data-parent="#accordion{{ month_year|replace({' ': '_'}) }}"
+                         id="collapse{{ month_year|replace({' ': '_'}) }}"
+                         class="collapse {{ loop.index == 1 ? 'show' : '' }}"
+                    >
+                        {% for menu in menus %}
+                            <div class="alert alert-primary d-flex align-items-center justify-content-around">
+                                <a class="text-primary-blue" href="{{ path('menu_show', {'id': menu.id}) }}">
+                                    <i class="fas fa-table"></i>
+                                    Menu n°{{ menu.id }} <br> du {{ menu.startedAt|date("d/m/Y") }} <br> au {{ menu.finishedAt|date("d/m/Y") }}
+                                </a>
+                                {{ table_actions(path('menu_edit', {'id': menu.id}), path('menu_delete', {'id': menu.id})) }}
+                            </div>
+                        {% endfor %}
                     </div>
-                </a>
+                </div>
             {% endfor %}
+        </div>
+
+
+
         </div>
     </div>
 {% endblock %}

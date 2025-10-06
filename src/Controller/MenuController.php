@@ -33,9 +33,9 @@ class MenuController extends AbstractController
      */
     public function index(MenuRepository $menuRepository): Response
     {
-        $menus = $menuRepository->findBy([], ['startedAt' => 'DESC']);
+        $byMonthYearMenus = $menuRepository->findAllGroupedByMonthYear();
         return $this->render('menu/index.html.twig', [
-            'menus' => $menus,
+            'month_year_menus' => $byMonthYearMenus,
         ]);
     }
 

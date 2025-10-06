@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Menu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +20,38 @@ class MenuRepository extends ServiceEntityRepository
         parent::__construct($registry, Menu::class);
     }
 
-    // /**
-    //  * @return Menu[] Returns an array of Menu objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllGroupedByMonthYear(): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('m')
+            ->orderBy('m.startedAt', 'DESC');
 
-    /*
-    public function findOneBySomeField($value): ?Menu
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $menus = $qb->getQuery()->getResult();
+
+        $sortedMenus = [];
+
+        // Formatter pour afficher les mois en français
+        $formatter = new \IntlDateFormatter(
+            'fr_FR',
+            \IntlDateFormatter::NONE,
+            \IntlDateFormatter::NONE,
+            null,
+            null,
+            'MMMM yyyy'
+        );
+
+        /** @var Menu $menu */
+        foreach ($menus as $menu) {
+            $key = $formatter->format($menu->getStartedAt());
+            $key = preg_replace('/\s+/u', ' ', $key);
+
+            if (!array_key_exists($key, $sortedMenus)) {
+                $sortedMenus[$key] = [];
+            }
+
+            $sortedMenus[$key][] = $menu;
+        }
+
+        return $sortedMenus;
     }
-    */
+
 }

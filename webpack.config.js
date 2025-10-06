@@ -27,6 +27,7 @@ Encore
     .addEntry('listItemsIsCheckedAjax', './assets/listItemIsCheckedAjax.js')
     .addEntry('alimentTableSearchFilter', './assets/alimentTableSearchFilter.js')
     .addEntry('recipeTableSearchFilter', './assets/recipeTableSearchFilter.js')
+    .addEntry('accordionMenu', './assets/accordionMenu.js')
 
     .copyFiles({
         from: './assets/img',

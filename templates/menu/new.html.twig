@@ -10,9 +10,10 @@
 {% else %}
     {% form_theme form_shift_step 'bootstrap_4_layout.html.twig' %}
 {% endif %}
+
 {% block body %}
-    <a class="p-3" href="{{ path('menu_index') }}">Retourner à la liste des menus</a>
-    <h4 class="text-center my-4">
+    <a class="p-3" href="{{ path('menu_index') }}">Retour aux menus</a>
+    <h4 class="text-center my-4 text-primary-blue">
         {% block title_form %}Créer un nouveau menu{% endblock %}
     </h4>
     <div id="shifts-container" data-async-url="{{ path('recipe_async_search') }}" data-seasons-query="{{ seasons_query ?? "" }}" class="container">
@@ -23,7 +24,7 @@
                 {{ form_row(form_date_step.finishedAt) }}
             </div>
             <div class="text-center mb-5">
-                <input class="btn btn-primary" type="submit" value="Compléter un menu à ces dates">
+                <input class="btn btn-tertiary" type="submit" value="Constituer le menu">
             </div>
             {{ form_end(form_date_step) }}
         {% endif %}
@@ -56,28 +57,45 @@
                     {% endfor %}
                 </select>
             </div>
+            {% set dayCount = form_shift_step.shifts|length /2 %}
             {% for shift in form_shift_step.shifts %}
-                <div class="alert alert-info">
-                    <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }}</div>
-                    {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
-                    <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
-                        {% for dish in shift.dishes %}
-                            <li class="dish-form mb-4">
-                                {{ form_widget(dish) }}
-                                <button
-                                    class="async-delete-dish-button"
-                                    data-async-delete-dish-url="{{ path("menu_async_delete_dish", {'id': dish.vars.value.id}) }}"
-                                >
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <button id="btn-{{ loop.index }}" data-dish-index="0" type="button" class="add-dish add_item_link btn btn-secondary" data-collection-holder-class="dishes">Ajouter un plat</button>
+                {% set dayCount = dayCount -0.5  %}
+                {% set oddDay = dayCount % 2 == 0 %}
+                {% set isNoonShift = loop.index % 2 != 0 %}
+
+                <div class="shifts-block">
+                    <div class="alert {{ oddDay ? 'alert-info' : 'alert-purple' }} {{ isNoonShift ? 'mb-0 rounded-top' : 'rounded-bottom' }}">
+                        <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }} {{ isNoonShift ? 'midi' : 'soir' }}</div>
+                        {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
+                        <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
+                            {% for dish in shift.dishes %}
+                                <li class="dish-form mb-4">
+                                    {{ form_widget(dish) }}
+                                    <button
+                                        class="async-delete-dish-button"
+                                        data-async-delete-dish-url="{{ path("menu_async_delete_dish", {'id': dish.vars.value.id}) }}"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <button id="btn-{{ loop.index }}"
+                                data-dish-index="0"
+                                type="button"
+                                class="add-dish add_item_link btn btn-outline-primary-blue btn-sm"
+                                data-collection-holder-class="dishes"
+                        >
+                            Ajouter un plat
+                        </button>
+
+                    </div>
                 </div>
+
             {% endfor %}
             <div class="text-center mb-5">
-                <input class="btn btn-primary" type="submit" value="{% block text_button %}Générer ce menu{% endblock %}">
+                <input class="btn btn-tertiary" type="submit" value="{% block text_button %}Générer ce menu{% endblock %}">
             </div>
             <div class="d-none">{{ form_rest(form_shift_step) }}</div>
             {{ form_end(form_shift_step) }}
