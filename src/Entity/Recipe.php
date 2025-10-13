@@ -26,9 +26,9 @@ class Recipe
     ];
 
     public const RECIPE_DURATION_TEXT = [
-        self::FAST    => 'Rapide',
-        self::AVERAGE => 'Normal',
-        self::LONG    => 'Long',
+        self::FAST    => '⚡ Rapide',
+        self::AVERAGE => '🍲 Normal',
+        self::LONG    => '🐢 Long',
     ];
 
     /**

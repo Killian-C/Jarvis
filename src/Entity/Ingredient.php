@@ -20,19 +20,19 @@ class Ingredient
     /**
      * @ORM\Column(type="integer")
      */
-    private $quantity;
+    private ?int $quantity;
 
     /**
      * @ORM\ManyToOne(targetEntity=Aliment::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $aliment;
+    private ?Aliment $aliment;
 
     /**
      * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredients")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $recipe;
+    private ?Recipe $recipe;
 
     public function getId(): ?int
     {

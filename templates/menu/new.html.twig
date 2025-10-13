@@ -72,7 +72,7 @@
                                 <li class="dish-form mb-4">
                                     {{ form_widget(dish) }}
                                     <button
-                                        class="async-delete-dish-button"
+                                        class="async-delete-dish-button btn btn-secondary"
                                         data-async-delete-dish-url="{{ path("menu_async_delete_dish", {'id': dish.vars.value.id}) }}"
                                     >
                                         <i class="fas fa-trash"></i>

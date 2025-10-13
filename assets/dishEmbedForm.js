@@ -44,7 +44,7 @@ const initTomSelect = (selectInput) => {
 
 const addRemovedBtn = (elementToRemove) => {
     const deleteBtn = document.createElement('button');
-    deleteBtn.innerHTML  = '<i class="fas fa-trash"></i>'
+    deleteBtn.innerHTML  = '<i class="fas fa-trash btn btn-secondary"></i>'
     deleteBtn.addEventListener('click', (e) => {
         e.preventDefault();
         elementToRemove.remove();

@@ -3,11 +3,10 @@
 {% block title %}Menu n° {{ menu.id }}{% endblock %}
 
 {% block body %}
-
-    <div class="d-flex justify-content-between align-items-center flex-row flex-sm-column mb-3">
-        <a class="pl-2" href="{{ path('menu_index') }}">Retour</a>
-        <h4 class="text-center mx-2">Menu du {{ menu.startedAt|date("d/m/Y") }} au {{ menu.finishedAt|date("d/m/Y") }}</h4>
-        <a class="btn btn-primary mr-2" href="{{ path('shopping_list_add_items_from_menu', { 'menu_id': menu.id }) }}">Ajouter à la liste</a>
+    <a class="pl-2" href="{{ path('menu_index') }}">Retour</a>
+    <div class="d-flex justify-content-between align-items-center flex-column mb-3">
+        <h5 class="text-center text-primary-blue mx-2 mb-4">Menu du {{ menu.startedAt|date("d/m/Y") }} au {{ menu.finishedAt|date("d/m/Y") }}</h5>
+        <a class="btn btn-sm btn-primary mr-2" href="{{ path('shopping_list_add_items_from_menu', { 'menu_id': menu.id }) }}">Ajouter à la liste</a>
     </div>
 
     <div class="mb-2 mx-md-2 mx-lg-4">
@@ -20,15 +19,17 @@
                         <div class="d-flex flex-column menu-bg p-1 mt-2">
                             {% for shift in to_display_shifts  %}
                                 {% if loop.index == 1 %}
-                                    <span class="text-primary">{{ shift.identifier }}</span>
+                                    <span class="text-primary-blue font-italic">{{ shift.identifier }}</span>
                                 {% endif %}
                                 <div class="flex-grow-1 alert alert-light mb-1 p-1 ">
                                     {% if shift.dishes is not empty %}
                                         <div class="text-secondary  mb-2">{{ shift.moment }}</div>
                                         {% for dish in shift.dishes %}
-                                            <div class="text-center">
-                                                <a href="{{ path('recipe_show', {'id': dish.recipe.id, 'peopleCount': dish.peopleCount }) }}">{{ dish.recipe.title }}</a>
-                                                <p class="small font-italic">pour {{ dish.peopleCount }}</p>
+                                            <div>
+                                                <a class="text-primary-blue font-weight-bold" href="{{ path('recipe_show', {'id': dish.recipe.id, 'peopleCount': dish.peopleCount }) }}">{{ dish.recipe.title }}</a>
+                                                {% if dish.peopleCount > 0 %}
+                                                    <p class="text-primary small font-italic">pour {{ dish.peopleCount }}</p>
+                                                {% endif %}
                                             </div>
                                         {% endfor %}
                                     {% else %}

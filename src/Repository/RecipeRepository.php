@@ -31,9 +31,9 @@ class RecipeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('r');
 
         $qb
-            ->join('r.ingredients', 'i')
-            ->join('r.recipeType', 'rt')
-            ->join('r.season', 's')
+            ->leftJoin('r.ingredients', 'i')
+            ->leftJoin('r.recipeType', 'rt')
+            ->leftJoin('r.season', 's')
         ;
 
         if ($value !== '') {

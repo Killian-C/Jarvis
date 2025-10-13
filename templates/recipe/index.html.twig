@@ -38,8 +38,8 @@
                     <td class="title">
                         <span class="font-weight-bold text-dark">{{ recipe.title }}</span><br>
                         <div class="small text-primary mt-1 text-primary-blue">
-                            <i class="fas fa-cloud-sun"></i> {{ recipe.season.name }}<br>
-                            <i class="fas fa-clock"></i> {{ constant('App\\Entity\\Recipe::RECIPE_DURATION_TEXT')[recipe.duration] }}
+                            {{ recipe.season.name }}<br>
+                            {{ constant('App\\Entity\\Recipe::RECIPE_DURATION_TEXT')[recipe.duration] }}
                         </div>
                     </td>
                     <td class="type text-dark">{{ recipe.recipeType.name }}</td>
