@@ -18,9 +18,9 @@ class Ingredient
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private ?int $quantity;
+    private ?float $quantity;
 
     /**
      * @ORM\ManyToOne(targetEntity=Aliment::class)
@@ -39,12 +39,12 @@ class Ingredient
         return $this->id;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): ?float
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setuantity(float $quantity): self
     {
         $this->quantity = $quantity;
 

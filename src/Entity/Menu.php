@@ -44,6 +44,11 @@ class Menu
      */
     private ?ShoppingList $shoppinglist;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isFavorite;
+
     public function __construct()
     {
         $this->shifts = new ArrayCollection();
@@ -136,6 +141,18 @@ class Menu
     public function setShoppinglist(?ShoppingList $shoppinglist): self
     {
         $this->shoppinglist = $shoppinglist;
+
+        return $this;
+    }
+
+    public function getIsFavorite(): ?bool
+    {
+        return $this->isFavorite;
+    }
+
+    public function setIsFavorite(?bool $isFavorite): self
+    {
+        $this->isFavorite = $isFavorite;
 
         return $this;
     }
