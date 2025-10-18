@@ -65,7 +65,12 @@
 
                 <div class="shifts-block">
                     <div class="alert {{ oddDay ? 'alert-info' : 'alert-purple' }} {{ isNoonShift ? 'mb-0 rounded-top' : 'rounded-bottom' }}">
-                        <div class="text-center font-weight-bold">{{ shift.vars.data.identifier }} {{ isNoonShift ? 'midi' : 'soir' }}</div>
+                        <div class="d-flex align-items-center justify-content-center font-weight-bold">
+                            {{ shift.vars.data.identifier }} {{ isNoonShift ? 'midi' : 'soir' }}
+                            <div class="shift-colors">
+                                {{ form_row(shift.color) }}
+                            </div>
+                        </div>
                         {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
                         <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
                             {% for dish in shift.dishes %}

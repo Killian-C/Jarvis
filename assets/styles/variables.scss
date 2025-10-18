@@ -6,68 +6,18 @@
 //  "secondary": #b4ace7,
 //);
 
-//PALETTE 1 violet/gris/saumon/jaune pâle
-//$theme-colors: (
-//  "light": #F7F6CF,
-//  "dark": #5784BA,
-//  "primary": #A1B3D1,
-//  "secondary": #D7B4BF,
-//  "secondary-dark": #955149,
-//  "tertiary": #F7F6CF,
-//);
-/**
-* PALETTE 1
-* violet: #A1B3D1
-* rose : #D7B4BF
-* jaune: #F7F6CF
- */
-
 
 //PALETTE 2 plutôt Années 50
 $theme-colors: (
   "light": #FFFFFF,
-  "primary-blue": #5784BA,
   "dark": #013776,
   "primary": #9AC8EB,
-  //"primary": #AFA4CE,
-  //"primary": #D6CFFF,
-  //"primary": #BBB4DA,
-  //"primary": #B4BAFF,
+  "primary-blue": #5784BA,
   "secondary": #F4CFDF,
-  //"secondary": #FFBBAB,
-  "tertiary": #F7F6CF,
-  //"secondary-dark": #F9968B,
-  //"secondary-dark": #F27438,
-  //"secondary-dark": #D46F4D,
-  //"secondary-dark": #430C05,
   "secondary-dark": #955149,
+  "tertiary": #F7F6CF,
   "purple": #AFA4CE,
 );
-/**
-* PALETTE 2
-* Bleu ciel light : #B6D8F2
-*
-* Bleu ciel dark : #9AC8EB --primary
-* Violet pastel 1 : #AFA4CE
-* Violet pastel +clair : #D6CFFF
-* Violet pastel 3 : #BBB4DA
-* Violet pastel 4 : #B4BAFF
-*
-* Bleu foncé : #5784BA --primary dark ?
-* Rose : #F4CFDF --secondary
-* Jaune : #F7F6CF --tertiary
-*/
-//$theme-colors: (
-//  "light": #FFFFFF,
-//  "dark": #705ed7,
-//  "primary": #B4BAFF,
-//  "secondary": #FFBBAB,
-//  "tertiary": #F7F6CF,
-//  "secondary-dark": #955149,
-//);
-
-
-
 
 $font-family-base: 'Coming Soon', cursive;
 $font-family-title: 'Permanent Marker', cursive;

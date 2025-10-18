@@ -26,7 +26,7 @@
                                         <div class="text-secondary  mb-2">{{ shift.moment }}</div>
                                         {% for dish in shift.dishes %}
                                             <div>
-                                                <a class="text-primary-blue font-weight-bold" href="{{ path('recipe_show', {'id': dish.recipe.id, 'peopleCount': dish.peopleCount }) }}">{{ dish.recipe.title }}</a>
+                                                <a style="color: {{ shift.color }}" class="font-weight-bold" href="{{ path('recipe_show', {'id': dish.recipe.id, 'peopleCount': dish.peopleCount }) }}">{{ dish.recipe.title }}</a>
                                                 {% if dish.peopleCount > 0 %}
                                                     <p class="text-primary small font-italic">pour {{ dish.peopleCount }}</p>
                                                 {% endif %}

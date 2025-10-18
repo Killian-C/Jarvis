@@ -43,6 +43,17 @@ class Shift
         'Sunday'    => 12,
     ];
 
+    public const BLUE_SHIFT = '#5784BA';
+    public const GREEN_SHIFT = '#28a745';
+    public const RED_SHIFT = '#955149';
+    public const DEFAULT_COLOR = self::BLUE_SHIFT;
+
+    public const SHIFT_COLOR_DETAILS = [
+        '🔵' => self::BLUE_SHIFT,
+        '🟢' => self::GREEN_SHIFT,
+        '🔴' => self::RED_SHIFT,
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -74,7 +85,7 @@ class Shift
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $color;
+    private ?string $color;
 
     public function __construct()
     {
@@ -159,7 +170,7 @@ class Shift
 
     public function setColor(?string $color): self
     {
-        $this->color = $color;
+        $this->color = $color ?? self::DEFAULT_COLOR;
 
         return $this;
     }
