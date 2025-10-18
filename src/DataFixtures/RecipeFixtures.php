@@ -24,7 +24,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Bacon' => 5
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons',
+            'season' => '🌈 Toutes saisons',
             'duration' => Recipe::FAST,
         ],
         'Pain' => [
@@ -33,7 +33,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Farine' => 100,
             ],
             'type' => 'Snack',
-            'season' => 'Été',
+            'season' => '☀️ Été',
             'duration' => Recipe::LONG,
         ],
         'Toast veggie' => [
@@ -42,7 +42,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Aubergine' => 3,
             ],
             'type' => 'Entrée',
-            'season' => 'Été',
+            'season' => '☀️ Été',
             'duration' => Recipe::FAST,
         ],
         'Flan vert indien' => [
@@ -52,7 +52,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Curry' => 20
             ],
             'type' => 'Plat',
-            'season' => 'Été',
+            'season' => '☀️ Été',
             'duration' => Recipe::AVERAGE,
         ],
         'Apéro piquant' => [
@@ -61,16 +61,16 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Chorizo' => 12,
             ],
             'type' => 'Apéro',
-            'season' => 'Hiver',
+            'season' => '❄️ Hiver',
             'duration' => Recipe::FAST,
         ],
-        'Riz cantonais d\'automne' => [
+        'Riz cantonais d\'🎃 Automne' => [
             'description' => 'faire la recette',
             'ingredients' => [
                 'Riz' => 250,
             ],
             'type' => 'Plat',
-            'season' => 'Automne',
+            'season' => '🎃 Automne',
             'duration' => Recipe::AVERAGE,
         ],
         'Riz au lait' => [
@@ -80,7 +80,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Sucre' => 12.5
             ],
             'type' => 'Dessert',
-            'season' => 'Printemps',
+            'season' => '🌸 Printemps',
             'duration' => Recipe::AVERAGE,
         ],
         'Poivrons farcis' => [
@@ -90,7 +90,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Bacon' => 7
             ],
             'type' => 'Plat',
-            'season' => 'Printemps',
+            'season' => '🌸 Printemps',
             'duration' => Recipe::LONG,
         ],
         'Ratatouille' => [
@@ -100,7 +100,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Tomate' => 7
             ],
             'type' => 'Plat',
-            'season' => 'Automne',
+            'season' => '🎃 Automne',
             'duration' => Recipe::LONG,
         ],
         'Fajitas' => [
@@ -110,7 +110,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Tomate' => 7
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons',
+            'season' => '🌈 Toutes saisons',
             'duration' => Recipe::AVERAGE,
         ],
         'Flammekueche' => [
@@ -120,37 +120,37 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 'Farine' => 100
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons',
+            'season' => '🌈 Toutes saisons',
             'duration' => Recipe::FAST,
         ],
-        'Pizza rapide toutes saisons' => [
+        'Pizza rapide 🌈 Toutes saisons' => [
             'description' => 'faire la recette',
             'ingredients' => [
                 'Fromage' => 350,
                 'Farine' => 100
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons',
+            'season' => '🌈 Toutes saisons',
             'duration' => Recipe::FAST,
         ],
-        'Pizza normale toutes saisons' => [
+        'Pizza normale 🌈 Toutes saisons' => [
             'description' => 'faire la recette',
             'ingredients' => [
                 'Tomate' => 5,
                 'Farine' => 100
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons',
+            'season' => '🌈 Toutes saisons',
             'duration' => Recipe::AVERAGE,
         ],
-        'Pizza longue toutes saisons' => [
+        'Pizza longue 🌈 Toutes saisons' => [
             'description' => 'faire la recette',
             'ingredients' => [
                 'Truffe' => 1,
                 'Farine' => 100
             ],
             'type' => 'Plat',
-            'season' => 'Toutes saisons',
+            'season' => '🌈 Toutes saisons',
             'duration' => Recipe::LONG,
         ],
 

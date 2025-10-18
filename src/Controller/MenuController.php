@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Dish;
 use App\Entity\Menu;
 use App\Entity\RecipeType;
+use App\Entity\Season;
 use App\Entity\Shift;
 use App\Form\MenuDateStepType;
 use App\Form\MenuType;
@@ -12,6 +13,7 @@ use App\Repository\MenuRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\RecipeTypeRepository;
 use App\Repository\SeasonRepository;
+use App\Service\SeasonDateAdapter;
 use App\Service\ShiftService;
 use DateMalformedStringException;
 use DateTime;
@@ -36,6 +38,36 @@ class MenuController extends AbstractController
         $byMonthYearMenus = $menuRepository->findAllGroupedByMonthYear();
         return $this->render('menu/index.html.twig', [
             'month_year_menus' => $byMonthYearMenus,
+        ]);
+    }
+
+    /**
+     * @Route("/favorites", name="index_favorites")
+     * @throws Exception
+     */
+    public function indexFavorites(MenuRepository $menuRepository, SeasonRepository $seasonRepository, SeasonDateAdapter $seasonDateAdapter): Response
+    {
+        $favoritesMenus         = $menuRepository->findBy(['isFavorite' => true]);
+        $seasons                = $seasonRepository->findAll();
+        $favoriteMenusBySeasons = [];
+
+        foreach ($seasons as $season) {
+            $season          = $seasonDateAdapter->actualizeSeasonToCurrentYear($season);
+            $seasonStartDate = $season->getStartDate();
+            $seasonEndDate   = $season->getEndDate();
+            $currentYear     = (int)(new DateTime())->format('Y');
+            foreach ($favoritesMenus as $favoriteMenu) {
+                //Le seasonAdapter n'a peut-êtr epas le bon nom,
+                // je l'utilise ici parce que j'ai besoin de synchroniser la date du menu et celle de la saison à l'année en cours
+                $favoriteMenuStartDate = $seasonDateAdapter->adapt(New DateTime($favoriteMenu->getStartedAt()->format('Y-m-d')), $currentYear);
+                if ($favoriteMenuStartDate >= $seasonStartDate && $favoriteMenuStartDate <= $seasonEndDate) {
+                    $favoriteMenusBySeasons[$season->getName()][] = $favoriteMenu;
+                }
+            }
+        }
+
+        return $this->render('menu/index_favorites.html.twig', [
+            'menu_favorites_by_seasons' => $favoriteMenusBySeasons,
         ]);
     }
 
@@ -67,9 +99,9 @@ class MenuController extends AbstractController
 
         $formDateStep->handleRequest($request);
         if ($formDateStep->isSubmitted() && $formDateStep->isValid()) {
-            $start  = $menu->getStartedAt();
-            $end    = $menu->getFinishedAt();
-            $shifts = $shiftService->getShiftsByMenuDates($start, $end);
+            $start   = $menu->getStartedAt();
+            $end     = $menu->getFinishedAt();
+            $shifts  = $shiftService->getShiftsByMenuDates($start, $end);
             $seasons = $seasonRepository->findSeasonByDate(new DateTime($start->format('Y-m-d')));
             $seasonNames = array_map(function ($season) {
                 return $season->getName();

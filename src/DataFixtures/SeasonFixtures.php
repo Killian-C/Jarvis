@@ -9,23 +9,23 @@ use Doctrine\Persistence\ObjectManager;
 class SeasonFixtures extends Fixture
 {
     public const SEASONS = [
-        'Printemps' => [
+        '🌸 Printemps' => [
             '2022-03-02',
             '2022-06-01'
         ],
-        'Été' => [
+        '☀️ Été' => [
             '2022-06-02',
             '2022-09-01'
         ],
-        'Automne' => [
+        '🎃 Automne' => [
             '2022-09-02',
             '2022-12-01'
         ],
-        'Hiver' => [
+        '❄️ Hiver' => [
             '2022-12-02',
             '2023-03-01'
         ],
-        'Toutes saisons' => [
+        '🌈 Toutes saisons' => [
             '2022-01-01',
             '2022-12-31'
         ]

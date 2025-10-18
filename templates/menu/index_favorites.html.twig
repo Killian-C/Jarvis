@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('accordionMenu') }}
+    {{ encore_entry_script_tags('menuIsFavoriteActionAjax') }}
+{% endblock %}
+
+{% block title %}Menus{% endblock %}
+
+{% block body %}
+    <div class="my-4 d-flex row align-items-center justify-content-center">
+        <h4 class="text-primary-blue mb-0 mr-4">Menus favoris</h4>
+        <a class="btn btn-primary-blue btn-sm" href="{{ path('menu_new') }}"><i class="fa fa-plus"></i></a>
+    </div>
+    <div class="text-center mb-4">
+        <form action="{{ path('menu_index') }}" method="post" class="mx-2">
+            <button class="btn btn-light btn-outline-primary text-primary"><i class="fas fa-table"></i> Tous</button>
+        </form>
+    </div>
+    <div class="container" id="menu-container">
+        <div class="justify-content-center">
+            {% for season_name, menus in menu_favorites_by_seasons %}
+                <div id="accordion{{ season_name|replace({' ': '_'}) }}">
+                    <div class="accordion-menu alert alert-info d-flex justify-content-between"
+                         data-toggle="collapse"
+                         data-target="#collapse{{ season_name|replace({' ': '_'}) }}"
+                         aria-expanded="true"
+                         aria-controls="collapse{{ season_name|replace({' ': '_'}) }}"
+                    >
+                        <div>{{ season_name }}</div>
+                        <div class="accordion-menu-arrow"><i class="fas fa-sort-down"></i></div>
+                    </div>
+
+                    <div data-parent="#accordion{{ season_name|replace({' ': '_'}) }}"
+                         id="collapse{{ season_name|replace({' ': '_'}) }}"
+                         class="collapse"
+                    >
+                        {% for menu in menus %}
+                            <div class="alert alert-primary d-flex align-items-center justify-content-around">
+                                <div class="text-primary js-favorite-box" id="favorite-menu-{{ menu.id}}-action" data-menu-id="{{ menu.id }}" data-menu-is-favorite="{{ menu.isFavorite ? '1' : '0' }}">
+                                    {% if menu.isFavorite %}
+                                        ⭐
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                </div>
+                                <a class="text-primary-blue" href="{{ path('menu_show', {'id': menu.id}) }}">
+                                    <i class="fas fa-table"></i>
+                                    Menu n°{{ menu.id }} <br>
+                                    du {{ menu.startedAt|date("d/m/Y") }} <br>
+                                    au {{ menu.finishedAt|date("d/m/Y") }}
+                                </a>
+                                {{ table_actions(path('menu_edit', {'id': menu.id}), path('menu_delete', {'id': menu.id})) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
