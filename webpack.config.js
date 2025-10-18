@@ -28,6 +28,7 @@ Encore
     .addEntry('alimentTableSearchFilter', './assets/alimentTableSearchFilter.js')
     .addEntry('recipeTableSearchFilter', './assets/recipeTableSearchFilter.js')
     .addEntry('accordionMenu', './assets/accordionMenu.js')
+    .addEntry('menuIsFavoriteActionAjax', './assets/menuIsFavoriteActionAjax.js')
 
     .copyFiles({
         from: './assets/img',

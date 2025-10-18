@@ -213,5 +213,23 @@ class MenuController extends AbstractController
         }
         return new JsonResponse([], 200);
     }
+
+    /**
+     * @param Menu $menu
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     * @Route("/async-change-is-favorite/{id}", name="async_change_is_favorite", methods={"POST"})
+     */
+    public function changeFavoriteState(Menu $menu, EntityManagerInterface $entityManager): JsonResponse
+    {
+        try {
+            $menu->setIsFavorite(!$menu->getIsFavorite());
+            $entityManager->flush();
+        } catch (Exception $e) {
+            return new JsonResponse(["error" => $e], 500);
+        }
+
+        return new JsonResponse([], 200);
+    }
 }
 

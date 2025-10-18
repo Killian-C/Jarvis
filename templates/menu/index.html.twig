@@ -4,6 +4,7 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('accordionMenu') }}
+    {{ encore_entry_script_tags('menuIsFavoriteActionAjax') }}
 {% endblock %}
 
 {% block title %}Liste des menus{% endblock %}
@@ -13,7 +14,7 @@
     <div class="text-center">
         <a class="my-4 btn btn-primary-blue" href="{{ path('menu_new') }}"><i class="fa fa-plus"></i> Menu</a>
     </div>
-    <div class="container">
+    <div class="container" id="menu-container">
         <div class="justify-content-center">
             {% for month_year, menus in month_year_menus %}
                 <div id="accordion{{ month_year|replace({' ': '_'}) }}">
@@ -32,13 +33,22 @@
                          class="collapse {{ loop.index == 1 ? 'show' : '' }}"
                     >
                         {% for menu in menus %}
-                            <div class="alert alert-primary d-flex align-items-center justify-content-around">
-                                <a class="text-primary-blue" href="{{ path('menu_show', {'id': menu.id}) }}">
-                                    <i class="fas fa-table"></i>
-                                    Menu n°{{ menu.id }} <br> du {{ menu.startedAt|date("d/m/Y") }} <br> au {{ menu.finishedAt|date("d/m/Y") }}
-                                </a>
-                                {{ table_actions(path('menu_edit', {'id': menu.id}), path('menu_delete', {'id': menu.id})) }}
-                            </div>
+                                <div class="alert alert-primary d-flex align-items-center justify-content-around">
+                                    <div class="text-primary js-favorite-box" id="favorite-menu-{{ menu.id}}-action" data-menu-id="{{ menu.id }}" data-menu-is-favorite="{{ menu.isFavorite ? '1' : '0' }}">
+                                        {% if menu.isFavorite %}
+                                            ⭐
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                    </div>
+                                    <a class="text-primary-blue" href="{{ path('menu_show', {'id': menu.id}) }}">
+                                        <i class="fas fa-table"></i>
+                                        Menu n°{{ menu.id }} <br>
+                                        du {{ menu.startedAt|date("d/m/Y") }} <br>
+                                        au {{ menu.finishedAt|date("d/m/Y") }}
+                                    </a>
+                                    {{ table_actions(path('menu_edit', {'id': menu.id}), path('menu_delete', {'id': menu.id})) }}
+                                </div>
                         {% endfor %}
                     </div>
                 </div>
