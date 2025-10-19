@@ -13,7 +13,7 @@
                    id="list-item-{{ list_item.id }}-label"
                    for="list-item-{{ list_item.id }}-input"
             >
-                {{ list_item.content }} x {{ list_item.quantity }}
+                {{ list_item.content }} x {{ list_item.quantity|replace({'.': ','}) }}
             </label>
 
             <a href="{{ path('shopping_list_delete_list_item', { 'id': list_item.id}) }}" class="js-delete-list-item" data-list-item-id="{{ list_item.id }}">

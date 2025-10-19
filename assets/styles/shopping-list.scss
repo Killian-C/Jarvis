@@ -9,6 +9,10 @@
     list-style-type: none;
   }
 
+  ul {
+    margin-bottom: 0;
+  }
+
   .checked-item {
     color: grey;
     text-decoration: line-through;

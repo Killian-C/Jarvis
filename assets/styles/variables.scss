@@ -1,4 +1,4 @@
-//PALETTE PAR DÉFAUT
+//FIRST PALETTE
 //$theme-colors: (
 //  "light": #FFFFFF,
 //  "dark": #000000,
@@ -6,8 +6,6 @@
 //  "secondary": #b4ace7,
 //);
 
-
-//PALETTE 2 plutôt Années 50
 $theme-colors: (
   "light": #FFFFFF,
   "dark": #013776,
@@ -17,6 +15,8 @@ $theme-colors: (
   "secondary-dark": #955149,
   "tertiary": #F7F6CF,
   "purple": #AFA4CE,
+  "yellow": #FFC107,
+  "yellow-dark": #856404,
 );
 
 $font-family-base: 'Coming Soon', cursive;
