@@ -1,19 +1,17 @@
 {% extends 'base.html.twig' %}
 {% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+{% from 'shared/titleAndNewActionMacro.html.twig' import title_and_new_action %}
 
 {% block title %}Liste des types de recette{% endblock %}
 
 {% block body %}
     <a class="p-3" href="{{ path('recipe_index') }}">Retour aux recettes</a>
     <div class="container">
-        <h4 class="text-primary-blue text-center my-4">Liste des types de recette</h4>
-        <div class="text-center">
-            <a class="btn btn-primary-blue" href="{{ path('recipetype_new') }}"><i class="fas fa-plus"></i> Type de recette</a>
-        </div>
+        {{ title_and_new_action('Types de recettes', path('recipetype_new')) }}
         <table class="table table-striped table-hover table-bordered mt-4">
             <thead>
             <tr>
-                <th>Type de recette</th> <th class="text-center">Actions</th>
+                <th>Types de recette</th> <th class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody class="list">

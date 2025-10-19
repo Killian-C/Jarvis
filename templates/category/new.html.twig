@@ -4,10 +4,10 @@
 
 {% block body %}
 <div class="container">
-    <a href="{{ path('category_index') }}">Retour à la liste des catégories</a>
-    <h3 class="text-center my-4 text-primary-blue">
+    <a href="{{ path('category_index') }}">Retour aux catégories</a>
+    <h4 class="text-center my-4 text-primary-blue">
         {% block title_form %}Ajouter une catégorie{% endblock %}
-    </h3>
+    </h4>
 </div>
 <div class="container text-center my-5">
     {{ form_start(form) }}

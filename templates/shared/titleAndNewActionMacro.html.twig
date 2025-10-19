@@ -1,0 +1,6 @@
+{% macro title_and_new_action(title, newAction) %}
+    <div class="my-4 d-flex row align-items-center justify-content-center">
+        <h4 class="text-primary-blue mb-0 mr-3">{{ title }}</h4>
+        <a class="btn btn-primary-blue btn-sm" href="{{ newAction }}"><i class="fa fa-plus"></i></a>
+    </div>
+{% endmacro %}

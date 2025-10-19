@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+{% from 'shared/titleAndNewActionMacro.html.twig' import title_and_new_action %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -10,14 +11,13 @@
 {% block title %}Menus{% endblock %}
 
 {% block body %}
-    <div class="my-4 d-flex row align-items-center justify-content-center">
-        <h4 class="text-primary-blue mb-0 mr-4">Menus</h4>
-        <a class="btn btn-primary-blue btn-sm" href="{{ path('menu_new') }}"><i class="fa fa-plus"></i></a>
-    </div>
-    <div class="text-center mb-4">
-        <form action="{{ path('menu_index_favorites') }}" method="post" class="mx-2">
-            <button class="btn btn-light btn-outline-primary text-primary"><i class="fas fa-star"></i> Favoris</button>
-        </form>
+    <div class="container">
+        {{ title_and_new_action('Menus', path('menu_new')) }}
+        <div class="text-center mb-4">
+            <form action="{{ path('menu_index_favorites') }}" method="post" class="mx-2">
+                <button class="btn btn-light btn-outline-primary text-primary"><i class="fas fa-star"></i> Favoris</button>
+            </form>
+        </div>
     </div>
     <div class="container" id="menu-container">
         <div class="justify-content-center">

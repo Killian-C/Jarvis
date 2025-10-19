@@ -1,18 +1,21 @@
 {% extends 'base.html.twig' %}
+{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+{% from 'shared/titleAndNewActionMacro.html.twig' import title_and_new_action %}
 
 {% block title %}Liste des recettes{% endblock %}
-{% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('recipeTableSearchFilter') }}
 {% endblock %}
 
 {% block body %}
-    <h3 class="text-primary-blue text-center my-4">Liste des recettes</h3>
-    <div class="text-center">
-        <a class="my-2 btn btn-primary-blue" href="{{ path('recipe_new') }}"><i class="fas fa-plus"></i> Recette</a><br>
-        <a class="my-2 btn btn-primary text-dark" href="{{ path('recipetype_index') }}"><i class="fas fa-tag"></i> Types de recette</a>
-        <a class="my-2 btn btn-primary text-dark" href="{{ path('season_index') }}"><i class="fas fa-cloud-sun"></i> Saisons</a>
+    <div class="container">
+        {{ title_and_new_action('Recettes', path('recipe_new')) }}
+        <div class="text-center">
+            <a class="my-2 btn btn-primary text-dark" href="{{ path('recipetype_index') }}"><i class="fas fa-tag"></i> Types de recette</a>
+            <a class="my-2 btn btn-primary text-dark" href="{{ path('season_index') }}"><i class="fas fa-cloud-sun"></i> Saisons</a>
+        </div>
     </div>
     <div id="recipes" class="container mt-4">
         <div class="d-flex flex-column flex-sm-row m-2">

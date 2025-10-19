@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'shared/tableActionsMacro.html.twig' import table_actions %}
+{% from 'shared/titleAndNewActionMacro.html.twig' import title_and_new_action %}
 
 {% block title %}Liste des aliments{% endblock %}
 
@@ -9,12 +10,13 @@
 {% endblock %}
 
 {% block body %}
-<h3 class="text-primary-blue text-center my-4">Liste des aliments</h3>
-<div class="text-center my-2">
-    <a class="btn btn-primary-blue my-2" href="{{ path('aliment_new') }}"><i class="fas fa-plus"></i> Aliment</a><br>
-    <a class="btn btn-primary text-dark my-2" href="{{ path('category_index') }}"><i class="fas fa-tags"></i> Catégories</a>
-    <a class="btn btn-primary text-dark my-2" href="{{ path('unit_index') }}"><i class="fas fa-ruler"></i> Unités</a>
-    <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux d'achats</a>
+<div class="container">
+    {{ title_and_new_action('Aliments', path('aliment_new')) }}
+    <div class="text-center my-2">
+        <a class="btn btn-primary text-dark my-2" href="{{ path('category_index') }}"><i class="fas fa-tags"></i> Catégories</a>
+        <a class="btn btn-primary text-dark my-2" href="{{ path('unit_index') }}"><i class="fas fa-ruler"></i> Unités</a>
+        <a class="btn btn-primary text-dark my-2" href="{{ path('shopplace_index') }}"><i class="fas fa-map-pin"></i> Lieux</a>
+    </div>
 </div>
 <div class="container" id="aliments">
     <div class="d-flex flex-column flex-sm-row m-2">
