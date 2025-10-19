@@ -1,5 +1,9 @@
-.recipe-ingredient-box, .recipe-description-box {
-  border-left: 5px solid var(--primary);
+.recipe-ingredient-box {
+  border-left: 5px solid var(--info);
+}
+
+.recipe-description-box {
+  border-left: 5px solid var(--yellow);
 }
 
 .recipe-ingredient-box .fa-carrot, .recipe-description-box .fa-list-ol {

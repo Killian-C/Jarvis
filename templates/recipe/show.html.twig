@@ -3,31 +3,32 @@
 {% block title %}{{ recipe.title }}{% endblock %}
 
 {% block body %}
-    <a class="p-2" href="{{ path('recipe_index') }}">Retour à la liste des recettes</a>
-    <h4 class="text-dark text-center mt-4">{{ recipe.title }}</h4>
-    <p class="text-center text-primary mb-4">
+    <a class="p-2" href="{{ path('recipe_index') }}">Retour aux recettes</a>
+    <div class="d-flex flex-row align-items-center justify-content-center mt-4">
+        <h4 class="text-dark mb-0 mr-3">{{ recipe.title }}</h4>
+        <form action="{{ path('recipe_edit', {'id': recipe.id}) }}" method="post" class="text-center">
+            <button class="btn btn-primary-blue btn-sm"><i class="fas fa-pen"></i></button>
+        </form>
+    </div>
+    <p class="text-center text-primary-blue mt-3 mb-0">
         {% if recipe.season %}
-            <i class="fas fa-sun"></i> {{ recipe.season.name }} /
+            {{ recipe.season.name }} <span class="text-primary">/</span>
         {% endif %}
         (pour {{ people_count }} personne)
     </p>
-    <form action="{{ path('recipe_edit', {'id': recipe.id}) }}" method="post" class="text-center">
-{#        <button class="btn btn-primary">Mettre à jour cette recette</button>#}
-        <button class="btn btn-secondary"><i class="fas fa-pen"></i> Éditer</button>
-    </form>
     <div class="container">
         <div class="row justify-content-center m-0">
-            <div class="col-12 col-md-5 recipe-ingredient-box alert alert-primary my-3 mx-2">
-                <h5 class="text-center mb-3"><i class="fas fa-carrot mr-2"></i> Ingrédients</h5>
+            <div class="col-12 col-md-5 recipe-ingredient-box alert alert-info my-3 mx-2">
+                <h6 class="text-center text-info mb-3"><i class="fas fa-carrot mr-2"></i> Ingrédients</h6>
                 <ul>
                     {% for ingredient in recipe.ingredients %}
                         {% set ingredient_quantity = ingredient.quantity * people_count %}
-                        <li>{{ ingredient.aliment.name }} - qté : {{ ingredient_quantity }} {{ ingredient.aliment.unit.name }}</li>
+                        <li>{{ ingredient.aliment.name }} x {{ ingredient_quantity }} {{ ingredient.aliment.unit.name }}</li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-12 col-md-5 recipe-description-box alert alert-primary my-3 mx-2">
-                <h5 class="text-center mb-3"><i class="fas fa-list-ol mr-2"></i> Déroulé de la recette</h5>
+            <div class="col-12 col-md-5 recipe-description-box alert alert-yellow my-3 mx-2">
+                <h6 class="text-center text-yellow-dark mb-3"><i class="fas fa-list-ol mr-2"></i> Déroulé de la recette</h6>
                 <p class="white-space-pre-wrap">{{ recipe.description }}</p>
             </div>
         </div>

@@ -32,7 +32,7 @@ class Ingredient
      * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredients")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?Recipe $recipe;
+    private ?Recipe $recipe = null;
 
     public function getId(): ?int
     {
@@ -44,7 +44,7 @@ class Ingredient
         return $this->quantity;
     }
 
-    public function setuantity(float $quantity): self
+    public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
 
