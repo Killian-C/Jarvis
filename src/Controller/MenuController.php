@@ -57,7 +57,7 @@ class MenuController extends AbstractController
             $seasonEndDate   = $season->getEndDate();
             $currentYear     = (int)(new DateTime())->format('Y');
             foreach ($favoritesMenus as $favoriteMenu) {
-                //Le seasonAdapter n'a peut-êtr epas le bon nom,
+                //Le seasonAdapter n'a peut-être pas le bon nom,
                 // je l'utilise ici parce que j'ai besoin de synchroniser la date du menu et celle de la saison à l'année en cours
                 $favoriteMenuStartDate = $seasonDateAdapter->adapt(New DateTime($favoriteMenu->getStartedAt()->format('Y-m-d')), $currentYear);
                 if ($favoriteMenuStartDate >= $seasonStartDate && $favoriteMenuStartDate <= $seasonEndDate) {
@@ -205,6 +205,65 @@ class MenuController extends AbstractController
     }
 
     /**
+     * @param Menu $menu
+     * @param string $shiftToUpdateIds
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param RecipeRepository $recipeRepository
+     * @param SeasonRepository $seasonRepository
+     * @param RecipeTypeRepository $recipeTypeRepository
+     * @return Response
+     * @throws DateMalformedStringException
+     * @Route("/edit-day-shifts/{id}/{shiftToUpdateIds}", name="edit_day_shifts", methods={"POST"})
+     */
+    public function editDayShifts(
+        Menu $menu,
+      string $shiftToUpdateIds,
+      Request $request,
+      EntityManagerInterface $entityManager,
+      RecipeRepository $recipeRepository,
+      SeasonRepository $seasonRepository,
+      RecipeTypeRepository $recipeTypeRepository
+    ): Response
+    {
+        $shiftIds = explode(',', $shiftToUpdateIds);
+
+        $seasons = $seasonRepository->findSeasonByDate($menu->getStartedAt());
+        $seasonNames = array_map(function ($season) {
+            return $season->getName();
+        }, $seasons);
+        $seasonsQuery = implode(", ", $seasonNames);
+
+        $form = $this->createForm(MenuType::class, $menu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($menu->getShifts() as $shift) {
+                $shift->setMenu($menu);
+                foreach ($shift->getDishes() as $dish) {
+                    $dish->setShift($shift);
+                }
+                $entityManager->persist($shift);
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('menu_show', ['id' => $menu->getId()]);
+        }
+
+        $recipes = $recipeRepository->findBy([], [ 'title' => 'ASC' ]);
+
+        return $this->render('menu/editOneShift.html.twig', [
+            'menu'                        => $menu,
+            'shift_to_update_ids'         => $shiftIds,
+            'form'                        => $form->createView(),
+            'recipes'                     => $recipes,
+            'seasons'                     => $seasons,
+            'all_recipe_types'            => $recipeTypeRepository->findAll(),
+            'default_recipe_type_filters' => RecipeType::DEFAULT_TYPE_FILTERS,
+            'seasons_query'               => $seasonsQuery,
+        ]);
+    }
+
+    /**
      * @Route("/delete/{id}", name="delete", methods={"POST"})
      */
     public function delete(Menu $menu, EntityManagerInterface $entityManager): Response
@@ -263,5 +322,6 @@ class MenuController extends AbstractController
 
         return new JsonResponse([], 200);
     }
+
 }
 

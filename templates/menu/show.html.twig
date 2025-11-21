@@ -19,7 +19,12 @@
                         <div class="d-flex flex-column menu-bg p-1 mt-2">
                             {% for shift in to_display_shifts  %}
                                 {% if loop.index == 1 %}
-                                    <span class="text-primary-blue font-italic">{{ shift.identifier }}</span>
+                                    <div class="d-flex flex-row align-items-center justify-content-around">
+                                        <span class="text-primary-blue font-italic">{{ shift.identifier }}</span>
+                                        <form action="{{ path('menu_edit_day_shifts', {'id': menu.id, 'shiftToUpdateIds': [to_display_shifts[0].id, to_display_shifts[1].id]|join(',') }) }}" method="post">
+                                            <button class="btn text-secondary-dark"><i class="fas fa-pen"></i></button>
+                                        </form>
+                                    </div>
                                 {% endif %}
                                 <div class="flex-grow-1 alert alert-light mb-1 p-1 ">
                                     {% if shift.dishes is not empty %}

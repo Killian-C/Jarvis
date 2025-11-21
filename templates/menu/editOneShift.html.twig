@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau menu{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('dishEmbedForm') }}
+{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+    <a class="p-3" href="{{ path('menu_show', {'id': menu.id}) }}">Retour au menu</a>
+    <h4 class="text-center my-4 text-primary-blue">
+        {% block title_form %}Mettre à jour la journée{% endblock %}
+    </h4>
+    <div id="shifts-container" data-async-url="{{ path('recipe_async_search') }}" data-seasons-query="{{ seasons_query ?? "" }}" class="container">
+        {{ form_start(form) }}
+
+        <div class="pb-4">
+            <p>Types de recettes :</p>
+            <select id="select-recipe-type" name="types[]" multiple autocomplete="off" data-recipe-types="">
+                <option value="">Ajouter un filtre de type</option>
+                {% for type in all_recipe_types %}
+                    {% if type.name in default_recipe_type_filters %}
+                        <option selected>{{ type.name }}</option>
+                    {% else %}
+                        <option>{{ type.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            {% if seasons|length > 0 %}
+                <p class="small font-italic">Saisons :
+                    {% for season in seasons %}
+                        {{ season.name }}{% if loop.index != seasons|length %}, {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+
+        {% set dayCount = form.shifts|length /2 %}
+        {% for shift in form.shifts %}
+            {% set dayCount = dayCount -0.5  %}
+            {% set oddDay = dayCount % 2 == 0 %}
+            {% set isNoonShift = loop.index % 2 != 0 %}
+
+            {% if shift.vars.value.id in (shift_to_update_ids) %}
+                <div class="shifts-block">
+                    <div class="alert {{ oddDay ? 'alert-info' : 'alert-purple' }} {{ isNoonShift ? 'mb-0 rounded-top' : 'rounded-bottom' }}">
+                        <div class="d-flex align-items-center justify-content-center font-weight-bold">
+                            {{ shift.vars.data.identifier }} {{ isNoonShift ? 'midi' : 'soir' }}
+                            <div class="shift-colors">
+                                {{ form_row(shift.color) }}
+                            </div>
+                        </div>
+                        {{ form_row(shift.identifier, {'value' : shift.vars.data.identifier}) }}
+                        <ul data-block-id="{{ loop.index }}" class="dishes dishes-block" data-prototype="{{ form_widget(shift.dishes.vars.prototype)|e('html_attr') }}">
+                            {% for dish in shift.dishes %}
+                                <li class="dish-form mb-4">
+                                    {{ form_widget(dish) }}
+                                    <button
+                                            class="async-delete-dish-button btn btn-secondary"
+                                            data-async-delete-dish-url="{{ path("menu_async_delete_dish", {'id': dish.vars.value.id}) }}"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <button id="btn-{{ loop.index }}"
+                                data-dish-index="0"
+                                type="button"
+                                class="add-dish add_item_link btn btn-outline-primary-blue btn-sm"
+                                data-collection-holder-class="dishes"
+                        >
+                            Ajouter un plat
+                        </button>
+
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <div class="text-center mb-5">
+            <input class="btn btn-tertiary" type="submit" value="{% block text_button %}Valider{% endblock %}">
+        </div>
+        <div class="d-none">{{ form_rest(form) }}</div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

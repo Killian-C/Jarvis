@@ -17,6 +17,16 @@ class ShiftType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $colorTypeOptions = [
+            'label'    => false,
+            'choices'  => Shift::SHIFT_COLOR_DETAILS,
+            'expanded' => true,
+            'multiple' => false,
+        ];
+        if (array_key_exists(MenuType::OPT_KEY_MODE, $options) && $options[MenuType::OPT_KEY_MODE] === MenuType::OPT_ARG_MODE_NEW) {
+            $colorTypeOptions['data'] = Shift::BLUE_SHIFT;
+        }
+
         $builder
             ->add('identifier', HiddenType::class, [
                 'label' => false,
@@ -24,12 +34,7 @@ class ShiftType extends AbstractType
             ->add('moment', HiddenType::class, [
                 'label' => false,
             ])
-            ->add('color', ChoiceType::class, [
-                'label'    => false,
-                'choices'  => Shift::SHIFT_COLOR_DETAILS,
-                'expanded' => true,
-                'multiple' => false,
-            ])
+            ->add('color', ChoiceType::class, $colorTypeOptions)
             ->add('dishes', CollectionType::class, [
                 'entry_type'    => DishType::class,
                 'allow_add'     => true,
