@@ -17,7 +17,9 @@ class CategoryFixtures extends Fixture
         'Légume',
         'Surgelé',
         'Viande',
-        'Féculent'
+        'Poisson',
+        'Féculent',
+        'Pâtisserie',
     ];
 
     public function load(ObjectManager $manager)

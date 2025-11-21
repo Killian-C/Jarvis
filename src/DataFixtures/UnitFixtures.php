@@ -14,9 +14,10 @@ class UnitFixtures extends Fixture
         'kg',
         'cc',
         'cs',
-        'mL',
-        'cL',
+        'ml',
+        'cl',
         'L',
+        'cm',
     ];
     public function load(ObjectManager $manager)
     {
