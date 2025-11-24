@@ -47,3 +47,43 @@ button {
 .li-style-none {
   list-style-type: none;
 }
+
+// Styles d'impression pour les menus
+@media print {
+  // Format paysage
+  @page {
+    size: landscape;
+    margin: 1cm;
+  }
+
+  // Masquer les éléments non imprimables
+  .no-print,
+  a[href*="menu_index"],
+  form button {
+    display: none !important;
+  }
+
+  // Conserver tous les styles existants et optimiser pour l'impression
+  body {
+    background: white;
+  }
+
+  .menu-container {
+    page-break-inside: avoid;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .menu-item {
+    break-inside: avoid;
+  }
+
+  // S'assurer que les couleurs et styles sont préservés
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+}

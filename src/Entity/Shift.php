@@ -45,7 +45,7 @@ class Shift
 
     public const BLUE_SHIFT = '#5784BA';
     public const GREEN_SHIFT = '#28a745';
-    public const RED_SHIFT = '#955149';
+    public const RED_SHIFT = '#ff0000';
     public const DEFAULT_COLOR = self::BLUE_SHIFT;
 
     public const SHIFT_COLOR_DETAILS = [
