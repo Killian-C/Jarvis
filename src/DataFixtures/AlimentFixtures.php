@@ -136,6 +136,21 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'unité',
             'Marché'
         ],
+        'Broccolis surgelés'   => [
+            'Surgelé',
+            'g',
+            'Supermarché'
+        ],
+        'Haricots verts surgelés'   => [
+            'Surgelé',
+            'g',
+            'Supermarché'
+        ],
+        'Petits pois surgelés'   => [
+            'Surgelé',
+            'g',
+            'Supermarché'
+        ],
         'Échalote'   => [
             'Légume',
             'unité',
@@ -196,9 +211,49 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'cm',
             'Bio / Vrac'
         ],
-        'Chocolat'   => [
-            'Pâtisserie',
+        'Tomates séchées'   => [
+            'Légume',
             'g',
+            'Supermarché'
+        ],
+        'Champignons surgelés'   => [
+            'Surgelé',
+            'g',
+            'Supermarché'
+        ],
+        'Salade'   => [
+            'Légume',
+            'unité',
+            'Bio / Vrac'
+        ],
+        'Mâche (sachet)'   => [
+            'Légume',
+            'unité',
+            'Supermarché'
+        ],
+        'Roquette (sachet)'   => [
+            'Légume',
+            'unité',
+            'Supermarché'
+        ],
+        'Feuilles de Basilic'   => [
+            'Légume',
+            'unité',
+            'Bio / Vrac'
+        ],
+        'Graines de courge'   => [
+            'Légume',
+            'g',
+            'Bio / Vrac'
+        ],
+        'Pistaches'   => [
+            'Légume',
+            'g',
+            'Supermarché'
+        ],
+        'Ciboulette thaï (bouquet)'   => [
+            'Légume',
+            'unité',
             'Supermarché'
         ],
         'Chocolat'   => [
@@ -227,13 +282,23 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'Supermarché'
         ],
         'Crème semi-épaisse'   => [
-            'Pâtisserie',
+            'Laitage',
             'cl',
             'Supermarché'
         ],
         'Crème liquide'   => [
-            'Pâtisserie',
+            'Laitage',
             'cl',
+            'Supermarché'
+        ],
+        'Crème soja'   => [
+            'Laitage',
+            'cl',
+            'Supermarché'
+        ],
+        'Crème fraîche'   => [
+            'Laitage',
+            'g',
             'Supermarché'
         ],
         'Lentilles vertes'   => [
@@ -256,6 +321,26 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'g',
             'Supermarché'
         ],
+        'Basilic'   => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Coriandre fraîche'   => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Ciboulette'   => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Menthe (feuilles)'   => [
+            'Condiment',
+            'unité',
+            'Supermarché'
+        ],
         'Farine de sarrasin'   => [
             'Pâtisserie',
             'g',
@@ -271,6 +356,16 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'g',
             'Bio / Vrac'
         ],
+        'Hâché végé'   => [
+            'Légume',
+            'g',
+            'Bio / Vrac'
+        ],
+        'Steak végé'   => [
+            'Légume',
+            'unité',
+            'Supermarché'
+        ],
         'Maïs'   => [
             'Légume',
             'g',
@@ -278,6 +373,31 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
         ],
         'Fromage râpé'   => [
             'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Fromage à raclette'   => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Chèvre (tranches)'   => [
+            'Laitage',
+            'unité',
+            'Supermarché'
+        ],
+        'Cheddar (tranches)'   => [
+            'Laitage',
+            'unité',
+            'Supermarché'
+        ],
+        'Cheddar râpé'   => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Croûtons'   => [
+            'Féculent',
             'g',
             'Supermarché'
         ],
@@ -314,6 +434,11 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
         'Pâtes Tagliatelles'   => [
             'Féculent',
             'g',
+            'Supermarché'
+        ],
+        'Pâtes à Lasagne'   => [
+            'Féculent',
+            'unité',
             'Supermarché'
         ],
         'Vermicelles de riz'   => [
@@ -451,6 +576,11 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'unité',
             'Supermarché'
         ],
+        'Pâte à gyoza'       => [
+            'Féculent',
+            'unité',
+            'Supermarché'
+        ],
         'Graines de sésame'       => [
             'Condiment',
             'g',
@@ -501,14 +631,14 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'g',
             'Supermarché'
         ],
-        'Chavroux'       => [
-            'Laitage',
-            'g',
-            'Supermarché'
-        ],
         'Maïzena'       => [
             'Pâtisserie',
             'g',
+            'Supermarché'
+        ],
+        'Bouchon de rhum'       => [
+            'Pâtisserie',
+            'unité',
             'Supermarché'
         ],
         'Yaourt grec'       => [
@@ -521,7 +651,182 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'unité',
             'Supermarché'
         ],
+        'Filet de poulet'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Rôti de dinde'      => [
+            'Viande',
+            'g',
+            'Supermarché'
+        ],
+        'Rôti de porc'      => [
+            'Viande',
+            'g',
+            'Supermarché'
+        ],
+        'Filet de dinde'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Escalope de poulet'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Escalope de dinde'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Jambon blanc'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Jambon cru'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Lardons'      => [
+            'Viande',
+            'g',
+            'Supermarché'
+        ],
+        'Boeuf hâché'      => [
+            'Viande',
+            'g',
+            'Supermarché'
+        ],
+        'Steak hâché'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Knacki'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Merguez'      => [
+            'Viande',
+            'unité',
+            'Supermarché'
+        ],
+        'Carpaccio de boeuf'      => [
+            'Viande',
+            'g',
+            'Supermarché'
+        ],
+        'Bouillon de légumes'      => [
+            'Condiment',
+            'unité',
+            'Supermarché'
+        ],
+        'Bouillon de boeuf'      => [
+            'Condiment',
+            'unité',
+            'Supermarché'
+        ],
+        'Bouillon de volaille'      => [
+            'Condiment',
+            'unité',
+            'Supermarché'
+        ],
+        'Bouillon pot-au-feu'      => [
+            'Condiment',
+            'unité',
+            'Supermarché'
+        ],
+        'Jus de rôti'      => [
+            'Condiment',
+            'unité',
+            'Supermarché'
+        ],
+        'Lait de coco'      => [
+            'Condiment',
+            'cl',
+            'Supermarché'
+        ],
+        'Harissa'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Pesto vert'      => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Pesto rouge'      => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Miel'      => [
+            'Condiment',
+            'cs',
+            'Supermarché'
+        ],
+        'Moutarde'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Pignons de pin'      => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Sel'      => [
+            'Condiment',
+            'cc',
+            'Bio / Vrac'
+        ],
+        'Gros sel'      => [
+            'Condiment',
+            'cc',
+            'Bio / Vrac'
+        ],
+        'Poivre'      => [
+            'Condiment',
+            'cc',
+            'Bio / Vrac'
+        ],
+        'Paprika'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Paprika fumé'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Ras el hanout'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Sel au céleri'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Tandoori'      => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
         'Crevettes'      => [
+            'Poisson',
+            'g',
+            'Marché'
+        ],
+        'Noix de St-Jacques'      => [
             'Poisson',
             'g',
             'Marché'
@@ -530,6 +835,16 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'Poisson',
             'g',
             'Marché'
+        ],
+        'Saumon fumé (tranches)'      => [
+            'Poisson',
+            'unité',
+            'Supermarché'
+        ],
+        'Truite fumée (tranches)'      => [
+            'Poisson',
+            'unité',
+            'Supermarché'
         ],
         'Thon'      => [
             'Poisson',
@@ -556,6 +871,76 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'cc',
             'Supermarché'
         ],
+        'Cannelle'     => [
+            'Pâtisserie',
+            'cc',
+            'Supermarché'
+        ],
+        'Coriandre en poudre'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        '4 épices'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Gingembre en poudre'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Piment de cayenne'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Muscade'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Épices méxicaines'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Épices italiennes'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Épices chinoises'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Épices espagnoles'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Aneth'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Colombo'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Cumin'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Curcuma'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
         'Sauce soja salée'     => [
             'Condiment',
             'cs',
@@ -576,7 +961,62 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
             'cs',
             'Supermarché'
         ],
+        'Sauce nuoc-mâm'     => [
+            'Condiment',
+            'cs',
+            'Supermarché'
+        ],
+        'Parmesan râpé'     => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Parmesan à râper'     => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Féta'     => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Ricotta'     => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Mascarpone'     => [
+            'Laitage',
+            'g',
+            'Supermarché'
+        ],
+        'Chapelure'     => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
+        'Huile piquante'     => [
+            'Condiment',
+            'cc',
+            'Supermarché'
+        ],
+        'Miso rouge'     => [
+            'Condiment',
+            'g',
+            'Supermarché'
+        ],
         'Sucre blanc'     => [
+            'Pâtisserie',
+            'g',
+            'Bio / Vrac'
+        ],
+        'Purée d\'amandes'     => [
+            'Pâtisserie',
+            'g',
+            'Bio / Vrac'
+        ],
+        'Purée de cacahuètes'     => [
             'Pâtisserie',
             'g',
             'Bio / Vrac'
@@ -594,6 +1034,31 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
         'Levure chimique'    => [
             'Pâtisserie',
             'g',
+            'Supermarché'
+        ],
+        'Pain de mie (tranches)'    => [
+            'Féculent',
+            'unité',
+            'Supermarché'
+        ],
+        'Pain (tranches)'    => [
+            'Féculent',
+            'unité',
+            'Bio / Vrac'
+        ],
+        'Pâte à tarte ronde'    => [
+            'Féculent',
+            'unité',
+            'Supermarché'
+        ],
+        'Pâte à tarte carrée'    => [
+            'Féculent',
+            'unité',
+            'Supermarché'
+        ],
+        'Pâte feuilletée'    => [
+            'Féculent',
+            'unité',
             'Supermarché'
         ],
         'Pépites de chocolat'    => [
@@ -639,6 +1104,16 @@ class AlimentFixtures extends Fixture implements DependentFixtureInterface
         'Lait entier' => [
             'Laitage',
             'L',
+            'Supermarché'
+        ],
+        'Frites' => [
+            'Surgelé',
+            'g',
+            'Supermarché'
+        ],
+        'Potatoes' => [
+            'Surgelé',
+            'g',
             'Supermarché'
         ],
     ];
