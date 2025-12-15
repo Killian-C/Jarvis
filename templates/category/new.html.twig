@@ -3,8 +3,8 @@
 {% block title %}Nouvelle catégorie d'aliment{% endblock %}
 
 {% block body %}
+<a class="ml-2" href="{{ path('category_index') }}">Retour aux catégories</a>
 <div class="container">
-    <a href="{{ path('category_index') }}">Retour aux catégories</a>
     <h4 class="text-center my-4 text-primary-blue">
         {% block title_form %}Ajouter une catégorie{% endblock %}
     </h4>

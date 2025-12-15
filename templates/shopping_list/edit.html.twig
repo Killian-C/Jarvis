@@ -9,8 +9,8 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
+    <a class="ml-2" href="{{ path('shopping_list_index') }}">Retour à la liste</a>
     <div class="container">
-        <a href="{{ path('shopping_list_index') }}">Retour à la liste</a>
         <h4 class="text-primary-blue text-center my-4">Liste de course</h4>
     </div>
     <div class="shopping-list container p-2 alert alert-warning d-flex justify-content-around align-items-center text-center">
