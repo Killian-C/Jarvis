@@ -1,8 +1,9 @@
-# Dockerfile pour développement local
+# Dockerfile.caprover - Pour déploiement Caprover
+# Image combinée PHP-FPM + Nginx
 
 FROM php:8.1-fpm
 
-# Installer les dépendances système
+# Installer les dépendances système + nginx + supervisor
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
@@ -10,28 +11,26 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libicu-dev \
     gnupg \
+    nginx \
+    supervisor \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-## Vérifier que les dépendances système requises pour l'extension GD sont installées
-#RUN dpkg -l | grep libjpeg-dev && dpkg -l | grep libpng-dev
 
 # Installer les extensions PHP
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install -j$(nproc) pdo_mysql opcache intl
-RUN docker-php-ext-configure gd #--with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd
 RUN docker-php-ext-install -j$(nproc) gd \
     && rm -rf /var/lib/php/*
 
 # Installer Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Définir le répertoire de travail comme le répertoire racine de l'application Symfony
+# Définir le répertoire de travail
 WORKDIR /var/www/symfony
 
-# Copier le fichier composer.json et composer.lock dans le conteneur et installer les dépendances
+# Copier et installer les dépendances PHP
 COPY composer.json composer.lock ./
-#RUN composer install --prefer-dist --optimize-autoloader
 RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
@@ -40,15 +39,24 @@ RUN composer install \
     --prefer-dist \
     --quiet
 
+# Installer Yarn via npm
 RUN apt-get update && apt-get install -y npm
 RUN npm install -g yarn
 
-
-# Copier tous les fichiers de l'application dans le conteneur
+# Copier tous les fichiers de l'application
 COPY . .
 
-# Exposer le port 9000 pour PHP-FPM
-EXPOSE 9000
+# Copier la configuration nginx
+COPY docker/nginx-caprover.conf /etc/nginx/sites-available/default
 
-# Démarrer PHP-FPM
-CMD ["php-fpm"]
+# Copier la configuration supervisor
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Permissions sur les dossiers Symfony
+RUN chown -R www-data:www-data /var/www/symfony/var /var/www/symfony/public
+
+# Exposer le port 80 (requis par Caprover)
+EXPOSE 80
+
+# Démarrer supervisor (gère nginx + php-fpm)
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
