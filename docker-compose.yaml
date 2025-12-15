@@ -11,8 +11,6 @@ services:
       - .:/var/www/symfony
     ports:
       - "9000:9000"
-    environment:
-      - DATABASE_URL="mysql://symfony:symfony@my_database:3306/jarvis?serverVersion=5.7"
     depends_on:
       - my_database
     networks:

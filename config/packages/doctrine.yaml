@@ -1,13 +1,6 @@
 doctrine:
     dbal:
-#        url: '%env(resolve:DATABASE_URL)%'
-        driver: 'pdo_mysql'
-        host: 'my_database'
-        port: 3306
-        dbname: 'jarvis'
-        user: 'symfony'
-        password: 'symfony'
-#        charset: utf8mb4
+        url: '%env(resolve:DATABASE_URL)%'
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
