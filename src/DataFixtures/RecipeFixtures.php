@@ -21,7 +21,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             'description' => 'faire la recette',
             'ingredients' => [
                 'Oeuf' => 2,
-                'Bacon' => 5
+                'Bacon (tranches)' => 5
             ],
             'type' => 'Plat',
             'season' => '🌈 Toutes saisons',
@@ -67,7 +67,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Riz cantonais d\'🎃 Automne' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Riz' => 250,
+                'Riz basmati' => 250,
             ],
             'type' => 'Plat',
             'season' => '🎃 Automne',
@@ -76,8 +76,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Riz au lait' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Riz' => 250,
-                'Sucre' => 12.5
+                'Riz basmati' => 250,
+                'Sucre blanc' => 12.5
             ],
             'type' => 'Dessert',
             'season' => '🌸 Printemps',
@@ -86,8 +86,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Poivrons farcis' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Poivron' => 2,
-                'Bacon' => 7
+                'Poivron vert' => 2,
+                'Bacon (tranches)' => 7
             ],
             'type' => 'Plat',
             'season' => '🌸 Printemps',
@@ -96,7 +96,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Ratatouille' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Poivron' => 2,
+                'Poivron vert' => 2,
                 'Tomate' => 7
             ],
             'type' => 'Plat',
@@ -106,7 +106,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Fajitas' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Poivron' => 2,
+                'Poivron vert' => 2,
                 'Tomate' => 7
             ],
             'type' => 'Plat',
@@ -116,7 +116,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Flammekueche' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Bacon' => 5,
+                'Bacon (tranches)' => 5,
                 'Farine' => 100
             ],
             'type' => 'Plat',
@@ -146,7 +146,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         'Pizza longue 🌈 Toutes saisons' => [
             'description' => 'faire la recette',
             'ingredients' => [
-                'Truffe' => 1,
+                'Champignon frais' => 1,
                 'Farine' => 100
             ],
             'type' => 'Plat',
