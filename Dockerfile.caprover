@@ -3,6 +3,11 @@
 
 FROM php:8.1-fpm
 
+# Configuration PHP pour la production
+RUN echo "display_errors = Off" >> /usr/local/etc/php/php.ini-production \
+    && echo "log_errors = On" >> /usr/local/etc/php/php.ini-production \
+    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
 # Installer les dépendances système + nginx + supervisor
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -39,8 +44,9 @@ RUN composer install \
     --prefer-dist \
     --quiet
 
-# Installer Yarn via npm
-RUN apt-get update && apt-get install -y npm
+# Installer Node.js 18 LTS et Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 RUN npm install -g yarn
 
 # Copier tous les fichiers de l'application
@@ -48,6 +54,7 @@ COPY . .
 
 # Installer les dépendances JS et compiler les assets
 RUN yarn install
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN yarn encore production
 
 # Copier la configuration nginx
@@ -57,6 +64,7 @@ COPY docker/nginx-caprover.conf /etc/nginx/sites-available/default
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Permissions sur les dossiers Symfony
+RUN mkdir -p /var/www/symfony/var/cache /var/www/symfony/var/log
 RUN chown -R www-data:www-data /var/www/symfony/var /var/www/symfony/public
 
 # Exposer le port 80 (requis par Caprover)
