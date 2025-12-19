@@ -46,6 +46,10 @@ RUN npm install -g yarn
 # Copier tous les fichiers de l'application
 COPY . .
 
+# Installer les dépendances JS et compiler les assets
+RUN yarn install
+RUN yarn encore production
+
 # Copier la configuration nginx
 COPY docker/nginx-caprover.conf /etc/nginx/sites-available/default
 
