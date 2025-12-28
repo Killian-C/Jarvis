@@ -24,7 +24,7 @@ class AlimentController extends AbstractController
      */
     public function index(AlimentRepository $alimentRepository, CategoryRepository $categoryRepository): Response
     {
-        $aliments = $alimentRepository->findAll();
+        $aliments = $alimentRepository->findBy([], ['name' => 'ASC']);
         $alimentCategories = $categoryRepository->findAll();
         return $this->render('aliment/index.html.twig', [
             'aliments'          => $aliments,
