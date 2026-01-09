@@ -20,7 +20,12 @@ class RecipeType extends AbstractType
             ->add('title', null, [
                 'label' => 'Titre',
             ])
-            ->add('description')
+            ->add('description', null, [
+                'label' => 'Description',
+                'attr' => [
+                    'rows' => 10,
+                ],
+            ])
             ->add('recipeType', EntityType::class, [
                 'label'        => 'Type',
                 'class'        => Type::class,

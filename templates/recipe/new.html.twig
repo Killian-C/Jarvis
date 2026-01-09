@@ -20,7 +20,6 @@
             {{ form_row(form.recipeType) }}
             {{ form_row(form.duration) }}
             {{ form_row(form.season) }}
-            {{ form_row(form.description) }}
             <p class="ingredients-list">Liste des ingrédients :</p>
             <ul id="ingredients-container" data-async-ingredients-url="{{ path('aliment_async_search') }}"class="ingredients" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
                 {% for ingredient in form.ingredients %}
@@ -29,7 +28,8 @@
                     </li>
                 {% endfor %}
             </ul>
-            <button id="add-ingredient" type="button" class="add_item_link btn btn-sm btn-outline-primary-blue" data-collection-holder-class="ingredients">Ajouter ingrédient</button>
+            <button id="add-ingredient" type="button" class="add_item_link btn btn-sm btn-outline-primary-blue mb-3" data-collection-holder-class="ingredients">Ajouter ingrédient</button>
+            {{ form_row(form.description) }}
         </div>
         <div class="text-center my-5">
             <input class="btn btn-tertiary p-3" type="submit" value="{% block text_button %}Ajouter{% endblock %}">
