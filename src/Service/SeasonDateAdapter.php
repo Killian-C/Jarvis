@@ -17,7 +17,7 @@ class SeasonDateAdapter
     /**
      * @param Season $season
      * @param int|null $referenceYear
-     * @return void
+     * @return Season
      */
     public function calibrateSeasonDates(Season $season, ?int $referenceYear = self::REFERENCE_YEAR): Season
     {

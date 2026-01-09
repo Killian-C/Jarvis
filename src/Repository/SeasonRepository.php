@@ -7,6 +7,7 @@ use App\Service\SeasonDateAdapter;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @method Season|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,17 +25,38 @@ class SeasonRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @param DateTime $date
+     * @return array
+     * @throws Exception
+     *
+     * si startDate 12/26 ET on2Y ET startSeasonMonth (ex: 12) > startDateMonth ===> RefYear
+     * si startDate 12/26 ET on2Y ET startSeasonMonth (ex: 09) <= startDateMonth ===> RefYear
+     * si startDate 01/27 ET on2Y ET startSeasonMonth (ex: 12) > startDateMonth ===> RefYear--
+     * si startDate 09/27 ET on2Y ET startSeasonMonth (ex: 09) > startDateMonth ===> RefYear
+     *
      */
-    public function findSeasonByDate(DateTime $date)
+    public function findSeasonByDate(DateTime $date): array
     {
-        $qb = $this->createQueryBuilder('s');
+        $seasons = $this->findAll();
+        $seasonsFiltered = [];
+        foreach ($seasons as $season) {
+            $onTwoYears = false;
+            if ((int)$season->getStartDate()->format('Y') < (int)$season->getEndDate()->format('Y')) {
+                $onTwoYears = true;
+            }
+            $yearToCalibrate = (int)(new DateTime($date->format('Y-m-d')))->format('Y');
 
-        $qb
-            ->where("s.start_date <= :date AND s.end_date >= :date")
-            ->setParameter('date', $this->seasonDateAdapter->adapt($date))
-        ;
+            if ($onTwoYears && (int)$season->getStartDate()->format('m') > (int)$date->format('m')) {
+                $yearToCalibrate--;
+            }
 
-        return $qb->getQuery()->getResult();
+            $calibrateSeason = $this->seasonDateAdapter->calibrateSeasonDates($season, $yearToCalibrate);
+
+            if ($calibrateSeason->getStartDate() <= $date && $calibrateSeason->getEndDate() >= $date) {
+                $seasonsFiltered[] = $season;
+            }
+        }
+
+        return $seasonsFiltered;
     }
 }
